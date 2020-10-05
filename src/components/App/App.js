@@ -2,11 +2,12 @@
 import React from 'react';
 //Components
 import LoginPage from 'pages/LoginPage';
+import RegisterPage from 'pages/RegisterPage';
 
 const App = () => {
 	return (
 		<div>
-			<LoginPage />
+			<RegisterPage />
 		</div>
 	);
 };

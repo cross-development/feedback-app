@@ -6,7 +6,7 @@ export const StyledH1 = styled.h1`
 	margin-bottom: 2rem;
 `;
 
-export const StylesForm = styled.form`
+export const StyledForm = styled.form`
 	display: flex;
 	flex-direction: column;
 	justify-content: flex-start;
