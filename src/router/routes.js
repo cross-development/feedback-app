@@ -3,7 +3,7 @@ import { lazy } from 'react';
 
 export default [
 	{
-		path: '/home',
+		path: '/',
 		label: 'Home',
 		exact: true,
 		private: false,
@@ -26,20 +26,20 @@ export default [
 		restricted: true,
 		component: lazy(() => import('pages/LoginPage' /* webpackChunkName: "login-page"*/)),
 	},
-	{
-		path: '/user/:userId',
-		label: 'User',
-		exact: true,
-		private: true,
-		restricted: false,
-		component: lazy(() => import('pages/UserPage' /* webpackChunkName: "user-page"*/)),
-	},
-	{
-		path: '/teammates/:teammateId',
-		label: 'Teammates',
-		exact: false,
-		private: true,
-		restricted: false,
-		component: lazy(() => import('page/TeammatePage' /* webpackChunkName: "teammate-page" */)),
-	},
+	// {
+	// 	path: '/users/:userId',
+	// 	label: 'Users',
+	// 	exact: true,
+	// 	private: true,
+	// 	restricted: false,
+	// 	component: lazy(() => import('pages/UserPage' /* webpackChunkName: "user-page"*/)),
+	// },
+	// {
+	// 	path: '/teammates/:teammateId',
+	// 	label: 'Teammates',
+	// 	exact: false,
+	// 	private: true,
+	// 	restricted: false,
+	// 	component: lazy(() => import('page/TeammatePage' /* webpackChunkName: "teammate-page" */)),
+	// },
 ];

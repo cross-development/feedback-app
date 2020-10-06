@@ -6,3 +6,10 @@
 	box-sizing: border-box;
 	font-family: 'Roboto', 'Ubuntu', sans-serif;
 }
+
+#root {
+	display: flex;
+	flex-direction: row;
+	align-items: flex-start;
+	justify-content: flex-start;
+}
