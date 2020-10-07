@@ -15,7 +15,9 @@ const Logo = () => {
 				<StyledLogoIconP>F</StyledLogoIconP>
 			</StyledIconWrapperDiv>
 
-			<StyledLogoH2>Feedback app</StyledLogoH2>
+			<StyledLogoH2>
+				Feedback <br /> app
+			</StyledLogoH2>
 		</StyledLogoWrapperDiv>
 	);
 };

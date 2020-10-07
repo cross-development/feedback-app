@@ -1,0 +1,47 @@
+[
+	{
+		"teammateId": "1",
+		"tmName": "Roy Schneider",
+		"avatarUrl": "Schneider"
+	},
+	{
+		"teammateId": "2",
+		"tmName": "Curtis Barnes",
+		"avatarUrl": "Barnes"
+	},
+	{
+		"teammateId": "3",
+		"tmName": "Shawn Rodgers",
+		"avatarUrl": "Rodgers"
+	},
+	{
+		"teammateId": "4",
+		"tmName": "Leila Gonzales",
+		"avatarUrl": "Gonzales"
+	},
+	{
+		"teammateId": "5",
+		"tmName": "Katie Munoz",
+		"avatarUrl": "Munoz"
+	},
+	{
+		"teammateId": "6",
+		"tmName": "Samuel McGuire",
+		"avatarUrl": "McGuire"
+	},
+	{
+		"teammateId": "7",
+		"tmName": "Timothy Sullivan",
+		"avatarUrl": "Sullivan"
+	},
+	{
+		"teammateId": "8",
+		"tmName": "Christopher Quinn",
+		"avatarUrl": "Quinn"
+	},
+	{
+		"teammateId": "9",
+		"tmName": "Roy Christ",
+		"avatarUrl": "Christ"
+	}
+]

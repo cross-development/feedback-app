@@ -5,8 +5,8 @@ import PropTypes from 'prop-types';
 import { StyledForm, StyledLabel, StyledInput, StyledButton, StyledH1 } from './Register.styles';
 
 const Register = ({
-	name,
 	email,
+	fullName,
 	password,
 	onSubmit,
 	onChangeName,
@@ -17,12 +17,12 @@ const Register = ({
 		<StyledH1>Sign up to provide a feedback</StyledH1>
 
 		<StyledLabel>
-			Name
+			Full name
 			<StyledInput
 				required
 				type="text"
-				name="name"
-				value={name}
+				name="fullName"
+				value={fullName}
 				autoComplete="off"
 				onChange={onChangeName}
 			/>
@@ -57,10 +57,10 @@ const Register = ({
 );
 
 Register.propTypes = {
-	name: PropTypes.string.isRequired,
 	email: PropTypes.string.isRequired,
 	onSubmit: PropTypes.func.isRequired,
 	password: PropTypes.string.isRequired,
+	fullName: PropTypes.string.isRequired,
 	onChangeName: PropTypes.func.isRequired,
 	onChangeEmail: PropTypes.func.isRequired,
 	onChangePassword: PropTypes.func.isRequired,

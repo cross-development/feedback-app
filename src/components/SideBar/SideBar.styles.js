@@ -8,5 +8,5 @@ export const StyledAside = styled.aside`
 	flex: 0 0 20%;
 	background-color: #22282d;
 	height: 100vh;
-	padding-top: 3rem;
+	padding-top: 2rem;
 `;
