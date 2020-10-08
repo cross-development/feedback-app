@@ -1,47 +1,56 @@
 [
 	{
-		"teammateId": "1",
+		"tmId": "1",
 		"tmName": "Roy Schneider",
-		"avatarUrl": "Schneider"
+		"tmAvatar": "Schneider",
+		"tmOccupation": "Middle Front-end Developer"
 	},
 	{
-		"teammateId": "2",
+		"tmId": "2",
 		"tmName": "Curtis Barnes",
-		"avatarUrl": "Barnes"
+		"tmAvatar": "Barnes",
+		"tmOccupation": "Senior Software Engineer"
 	},
 	{
-		"teammateId": "3",
+		"tmId": "3",
 		"tmName": "Shawn Rodgers",
-		"avatarUrl": "Rodgers"
+		"tmAvatar": "Rodgers",
+		"tmOccupation": "Junior Front-end Developer"
 	},
 	{
-		"teammateId": "4",
+		"tmId": "4",
 		"tmName": "Leila Gonzales",
-		"avatarUrl": "Gonzales"
+		"tmAvatar": "Gonzales",
+		"tmOccupation": "Senior Front-end Developer"
 	},
 	{
-		"teammateId": "5",
+		"tmId": "5",
 		"tmName": "Katie Munoz",
-		"avatarUrl": "Munoz"
+		"tmAvatar": "Munoz",
+		"tmOccupation": "Middle Software Engineer"
 	},
 	{
-		"teammateId": "6",
+		"tmId": "6",
 		"tmName": "Samuel McGuire",
-		"avatarUrl": "McGuire"
+		"tmAvatar": "McGuire",
+		"tmOccupation": "Junior Software Engineer"
 	},
 	{
-		"teammateId": "7",
+		"tmId": "7",
 		"tmName": "Timothy Sullivan",
-		"avatarUrl": "Sullivan"
+		"tmAvatar": "Sullivan",
+		"tmOccupation": "DevOps"
 	},
 	{
-		"teammateId": "8",
+		"tmId": "8",
 		"tmName": "Christopher Quinn",
-		"avatarUrl": "Quinn"
+		"tmAvatar": "Quinn",
+		"tmOccupation": "Junior Java Developer"
 	},
 	{
-		"teammateId": "9",
+		"tmId": "9",
 		"tmName": "Roy Christ",
-		"avatarUrl": "Christ"
+		"tmAvatar": "Christ",
+		"tmOccupation": "ReactJS Developer"
 	}
 ]

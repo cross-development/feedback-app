@@ -34,12 +34,12 @@ export default [
 	// 	restricted: false,
 	// 	component: lazy(() => import('pages/UserPage' /* webpackChunkName: "user-page"*/)),
 	// },
-	// {
-	// 	path: '/teammates/:teammateId',
-	// 	label: 'Teammates',
-	// 	exact: false,
-	// 	private: true,
-	// 	restricted: false,
-	// 	component: lazy(() => import('page/TeammatePage' /* webpackChunkName: "teammate-page" */)),
-	// },
+	{
+		path: '/teammates/:teammateId',
+		label: 'Teammates',
+		exact: false,
+		private: true,
+		restricted: false,
+		component: lazy(() => import('pages/TeammatePage' /* webpackChunkName: "teammate-page" */)),
+	},
 ];

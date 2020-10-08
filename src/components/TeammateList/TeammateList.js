@@ -12,13 +12,10 @@ import {
 
 const TeammateList = ({ teammates }) => (
 	<StylesTeamUL>
-		{teammates.map(({ teammateId, tmName, avatarUrl }) => (
-			<StyledTeamLI key={teammateId}>
-				<StyledTeamLink to={`/teammates/${teammateId}`}>
-					<StyledAvatarIMG
-						src={`${process.env.PUBLIC_URL}/avatars/${avatarUrl}.png`}
-						alt={tmName}
-					/>
+		{teammates.map(({ tmId, tmName, tmAvatar }) => (
+			<StyledTeamLI key={tmId}>
+				<StyledTeamLink to={`/teammates/${tmId}`}>
+					<StyledAvatarIMG src={`${process.env.PUBLIC_URL}/avatars/${tmAvatar}.png`} alt={tmName} />
 					<StyledNameSpan>{tmName}</StyledNameSpan>
 				</StyledTeamLink>
 			</StyledTeamLI>
@@ -29,9 +26,9 @@ const TeammateList = ({ teammates }) => (
 TeammateList.propTypes = {
 	teammates: PropTypes.arrayOf(
 		PropTypes.shape({
+			tmId: PropTypes.string.isRequired,
 			tmName: PropTypes.string.isRequired,
-			avatarUrl: PropTypes.string.isRequired,
-			teammateId: PropTypes.string.isRequired,
+			tmAvatar: PropTypes.string.isRequired,
 		}).isRequired,
 	).isRequired,
 };

@@ -6,6 +6,22 @@ export const StylesTeamUL = styled.ul`
 	width: 70%;
 	max-height: 54%;
 	overflow-y: scroll;
+
+	&::-webkit-scrollbar {
+		width: 10px;
+	}
+
+	&::-webkit-scrollbar-track {
+		background: #424242;
+	}
+
+	&::-webkit-scrollbar-thumb {
+		background: #7a7e81;
+	}
+
+	&::-webkit-scrollbar-thumb:hover {
+		background: #9e9e9e;
+	}
 `;
 
 export const StyledTeamLI = styled.li`
