@@ -1,8 +1,19 @@
 //Core
 import React from 'react';
 import PropTypes from 'prop-types';
+//Components
+import StarsRating from '../StarsRating';
 //Styles
-import { StyledLabel, StyledInput, StyledButton } from './Teammate.styles';
+import {
+	StyledLabel,
+	StyledInput,
+	StyledButton,
+	StyledWrapperDiv,
+	StyledRatingForm,
+	StyledFormTitleH2,
+	StyledContainerDiv,
+	StyledFormSubTitleH3,
+} from './Teammate.styles';
 
 const Teammate = ({
 	member,
@@ -15,33 +26,37 @@ const Teammate = ({
 	const { tmName, tmAvatar, tmOccupation } = member;
 
 	return (
-		<div>
+		<StyledContainerDiv>
 			<div>
-				<div>
+				<StyledWrapperDiv>
 					<img src={`${process.env.PUBLIC_URL}/avatars/${tmAvatar}.png`} alt={tmName} />
 					<p>{tmName}</p>
 					<p>{tmOccupation}</p>
-				</div>
-				<div>
+				</StyledWrapperDiv>
+				<StyledWrapperDiv>
 					<span>&times;</span>
 					<p>ESC</p>
-				</div>
+				</StyledWrapperDiv>
 			</div>
 
-			<form onSubmit={onSubmit}>
-				<h2>Provide feedback</h2>
+			<StyledRatingForm onSubmit={onSubmit}>
+				<StyledFormTitleH2>Provide feedback</StyledFormTitleH2>
 
-				<p>Leadership skills</p>
-				<p>English language knowledge</p>
-				<p>Communication skills</p>
-				<p>Problem solving</p>
-				<p>Programming skills</p>
-				<p>Ability to learning</p>
-				<p>Workflow behavior</p>
-				<p>Sense of humor</p>
+				<StyledWrapperDiv>
+					<StyledFormSubTitleH3>Personal skills and competences</StyledFormSubTitleH3>
 
-				<div>
-					<h3>Write a feedback</h3>
+					<StarsRating label="Leadership skills" />
+					<StarsRating label="English language knowledge" />
+					<StarsRating label="Communication skills" />
+					<StarsRating label="Problem solving" />
+					<StarsRating label="Programming skills" />
+					<StarsRating label="Ability to learning" />
+					<StarsRating label="Workflow behavior" />
+					<StarsRating label="Sense of humor" />
+				</StyledWrapperDiv>
+
+				<StyledWrapperDiv>
+					<StyledFormSubTitleH3>Write a feedback</StyledFormSubTitleH3>
 
 					<StyledLabel>
 						<StyledInput
@@ -64,10 +79,10 @@ const Teammate = ({
 							placeholder="What could be improved"
 						/>
 					</StyledLabel>
-				</div>
-				<StyledButton type="submit">Submit</StyledButton>
-			</form>
-		</div>
+					<StyledButton type="submit">Submit</StyledButton>
+				</StyledWrapperDiv>
+			</StyledRatingForm>
+		</StyledContainerDiv>
 	);
 };
 

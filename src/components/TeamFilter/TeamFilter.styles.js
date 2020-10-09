@@ -17,7 +17,7 @@ export const StyledFilterLabel = styled.label`
 export const StyledFilterInput = styled.input`
 	color: #d3d4d5;
 	font-size: 14px;
-	padding: 4px;
+	padding: 4px 0;
 	border: none;
 	background-color: transparent;
 	border-bottom: 2px solid #616161;
