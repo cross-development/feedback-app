@@ -7,7 +7,7 @@ import Login from 'components/Login';
 import { connect } from 'react-redux';
 import { authOperations, authSelectors } from 'redux/auth';
 
-const LoginPage = ({ onLogin, error, history }) => {
+const LoginPage = ({ onLogin, error }) => {
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
 
@@ -18,8 +18,6 @@ const LoginPage = ({ onLogin, error, history }) => {
 		e.preventDefault();
 
 		onLogin(email, password);
-
-		history.push('/main');
 
 		setPassword('');
 		setEmail('');

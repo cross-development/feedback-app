@@ -1,16 +1,11 @@
 //Core
 import React from 'react';
 import PropTypes from 'prop-types';
-import StarsRating from '../StarsRating';
+//Components
+// import Rating from '@material-ui/lab/Rating';
 //Styles
-import {
-	StyledNameP,
-	StyledWrapperDiv,
-	StyledAvatarWrap,
-	StyledAvatarIMG,
-	StyledOccupationP,
-	StyledContainerDiv,
-} from './TeammateCard.styles';
+import { StyledNameP, StyledAvatarIMG, StyledWrapperDiv } from './TeammateCard.styles';
+import { StyledAvatarWrap, StyledOccupationP, StyledContainerDiv } from './TeammateCard.styles';
 
 const TeammateCard = ({ score, member }) => {
 	const { tmName, tmAvatar, tmOccupation } = member;
@@ -26,13 +21,19 @@ const TeammateCard = ({ score, member }) => {
 				</StyledWrapperDiv>
 			</StyledAvatarWrap>
 
-			<StyledWrapperDiv>
+			{/* <StyledWrapperDiv>
 				<p>Average score</p>
 				<div>
 					<span>4.2</span>
-					<StarsRating />
+					<Rating
+							name="score"
+							value={score}
+							onChange={(event, newValue) => {
+								handleRatings({ ...state, [`${label}`]: newValue });
+							}}
+						/>
 				</div>
-			</StyledWrapperDiv>
+			</StyledWrapperDiv> */}
 
 			<StyledWrapperDiv>
 				<span>&times;</span>

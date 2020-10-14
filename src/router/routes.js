@@ -7,7 +7,7 @@ export default [
 		label: 'Home',
 		exact: true,
 		private: false,
-		restricted: true,
+		restricted: false,
 		component: lazy(() => import('pages/HomePage' /* webpackChunkName: "home-page" */)),
 	},
 	{
@@ -25,14 +25,6 @@ export default [
 		private: false,
 		restricted: true,
 		component: lazy(() => import('pages/LoginPage' /* webpackChunkName: "login-page"*/)),
-	},
-	{
-		path: '/main',
-		label: 'Main',
-		exact: true,
-		private: true,
-		restricted: false,
-		component: lazy(() => import('pages/MainPage' /* webpackChunkName: "main-page" */)),
 	},
 	{
 		path: '/users/:userId',

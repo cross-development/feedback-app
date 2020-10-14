@@ -8,23 +8,49 @@ import teammates from 'data/teammates.json';
 
 const TeammatePage = () => {
 	const { teammateId } = useParams();
-	const [wrong, setWrong] = useState('');
-	const [improve, setImprove] = useState('');
+
+	const ratingsState = {
+		leadershipSkills: 0,
+		englishKnowledge: 0,
+		communicateSkills: 0,
+		problemSolving: 0,
+		programmingSkills: 0,
+		abilityLearning: 0,
+		workflowBehavior: 0,
+		senseOfHumor: 0,
+	};
+
+	const resolutionState = {
+		improve: '',
+		wrong: '',
+	};
+
+	const [resolution, setResolution] = useState(resolutionState);
+	const [ratings, setRatings] = useState(ratingsState);
 	const [teammate, setTeammate] = useState(null);
 
-	const handleChangeWrong = ({ target: { value } }) => setWrong(value);
-	const handleChangeImprove = ({ target: { value } }) => setImprove(value);
+	const handleChangeRatings = value => setRatings(value);
+	const handleChangeResolution = value => setResolution(value);
 
 	const handleSubmit = e => {
 		e.preventDefault();
 
-		//TODO: изменить метод онЛогин с редакса на сервисы
+		const feedback = {
+			ratings,
+			resolution,
+			teammate,
+		};
+
+		console.log(feedback);
+
+		//TODO: тут будет метод, который отправит полный отзыв на сервер
 		// this.props.onFeedback(fullName, email, password);
-		setWrong('');
-		setImprove('');
+		setResolution(resolutionState);
+		setRatings(ratingsState);
 	};
 
 	useEffect(() => {
+		//TODO: тут будет метод, который будет забирать всех тиммейтов с сервера
 		const member = teammates.find(({ tmId }) => tmId === teammateId);
 
 		setTeammate(member);
@@ -34,11 +60,11 @@ const TeammatePage = () => {
 		teammate && (
 			<Teammate
 				member={teammate}
-				wrongValue={wrong}
-				improveValue={improve}
+				ratingsState={ratings}
+				resolutionState={resolution}
 				onSubmit={handleSubmit}
-				onChangeWrong={handleChangeWrong}
-				onChangeImprove={handleChangeImprove}
+				handleRatings={handleChangeRatings}
+				handleResolution={handleChangeResolution}
 			/>
 		)
 	);

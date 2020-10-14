@@ -13,16 +13,18 @@ export const StyledRatingForm = styled.form`
 	width: 100%;
 `;
 
-export const StyledFormTitleH2 = styled.h2`
+export const StyledTitleH2 = styled.h2`
 	color: #ec1940;
 	font-size: 24px;
 	font-weight: 400;
+	margin-bottom: 1.5rem;
 `;
 
-export const StyledFormSubTitleH3 = styled.h3`
+export const StyledSubtitleH3 = styled.h3`
 	color: #22282d;
 	font-size: 16px;
 	font-weight: 400;
+	margin-bottom: 1rem;
 `;
 
 export const StyledWrapperDiv = styled.div`
@@ -37,9 +39,9 @@ export const StyledLabel = styled.label`
 	margin-bottom: 30px;
 	width: 100%;
 
-	&:last-of-type {
+	/* &:last-of-type {
 		margin-bottom: 50px;
-	}
+	} */
 `;
 
 export const StyledInput = styled.input`
@@ -55,6 +57,7 @@ export const StyledInput = styled.input`
 	&::placeholder {
 		font: inherit;
 		color: #616161;
+		font-size: 14px;
 	}
 
 	&::-webkit-input-placeholder {

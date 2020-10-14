@@ -1,0 +1,34 @@
+[
+	{
+		"title": "Leadership skills",
+		"label": "leadershipSkills"
+	},
+	{
+		"title": "English language knowledge",
+		"label": "englishKnowledge"
+	},
+	{
+		"title": "Communication skills",
+		"label": "communicateSkills"
+	},
+	{
+		"title": "Problem solving",
+		"label": "problemSolving"
+	},
+	{
+		"title": "Programming skills",
+		"label": "programmingSkills"
+	},
+	{
+		"title": "Ability to learning",
+		"label": "abilityLearning"
+	},
+	{
+		"title": "Workflow behavior",
+		"label": "workflowBehavior"
+	},
+	{
+		"title": "Sense of humor",
+		"label": "senseOfHumor"
+	}
+]

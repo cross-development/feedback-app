@@ -17,3 +17,10 @@ ReactDOM.render(
 	</Provider>,
 	document.getElementById('root'),
 );
+
+// const response = await getProducts()
+//         const products = Object.keys(response.data).reduce((acc, key) => {
+//             acc.push({ id: key, ...response.data[key] })
+//             return acc
+//         }, []);
+//         this.setState({ products })

@@ -17,7 +17,7 @@ import teammateList from 'data/teammates.json';
 const SideBar = ({ existUser }) => {
 	const [filter, setFilter] = useState('');
 	// const [teammates, setTeammates] = useState(null);
-
+	//TODO: тут будет метод, который будет забирать всех тиммейтов с сервера
 	const teammates = [...teammateList];
 
 	const handleChangeFilter = filter => setFilter(filter);
