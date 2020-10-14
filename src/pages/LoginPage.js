@@ -3,8 +3,11 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 //Components
 import Login from 'components/Login';
+//Redux
+import { connect } from 'react-redux';
+import { authOperations, authSelectors } from 'redux/auth';
 
-const LoginPage = () => {
+const LoginPage = ({ onLogin, error, history }) => {
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
 
@@ -14,8 +17,10 @@ const LoginPage = () => {
 	const handleSubmit = e => {
 		e.preventDefault();
 
-		//TODO: изменить метод онЛогин с редакса на сервисы
-		// this.props.onLogin(email, password);
+		onLogin(email, password);
+
+		history.push('/main');
+
 		setPassword('');
 		setEmail('');
 	};
@@ -34,12 +39,20 @@ const LoginPage = () => {
 };
 
 LoginPage.propTypes = {
-	error: PropTypes.object,
 	onLogin: PropTypes.func.isRequired,
+	error: PropTypes.object,
 };
 
 LoginPage.defaultProps = {
 	error: null,
 };
 
-export default LoginPage;
+const mapStateToProps = state => ({
+	error: authSelectors.getError(state),
+});
+
+const mapDispatchToProps = {
+	onLogin: authOperations.login,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(LoginPage);

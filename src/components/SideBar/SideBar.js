@@ -1,19 +1,24 @@
 //Core
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
 //Components
 import Logo from '../Logo';
 import UserMenu from '../UserMenu';
 import TeamFilter from '../TeamFilter';
 import TeammateList from '../TeammateList';
+//Redux
+import { connect } from 'react-redux';
+import { authSelectors } from 'redux/auth';
 //Styles
 import { StyledAside } from './SideBar.styles';
 
 import teammateList from 'data/teammates.json';
 
-const SideBar = () => {
-	const teammates = [...teammateList];
-
+const SideBar = ({ existUser }) => {
 	const [filter, setFilter] = useState('');
+	// const [teammates, setTeammates] = useState(null);
+
+	const teammates = [...teammateList];
 
 	const handleChangeFilter = filter => setFilter(filter);
 
@@ -26,13 +31,29 @@ const SideBar = () => {
 		<StyledAside>
 			<Logo />
 
-			<UserMenu />
+			{existUser && (
+				<>
+					<UserMenu uid={existUser.uid} name={existUser.displayName} />
 
-			<TeamFilter value={filter} onChangeFilter={handleChangeFilter} />
+					<TeamFilter value={filter} onChangeFilter={handleChangeFilter} />
 
-			<TeammateList teammates={visibleTeammates} />
+					<TeammateList teammates={visibleTeammates} />
+				</>
+			)}
 		</StyledAside>
 	);
 };
 
-export default SideBar;
+SideBar.propTypes = {
+	existUser: PropTypes.objectOf(PropTypes.any),
+};
+
+SideBar.defaultProps = {
+	existUser: null,
+};
+
+const mapStateToProps = state => ({
+	existUser: authSelectors.existUser(state),
+});
+
+export default connect(mapStateToProps)(SideBar);

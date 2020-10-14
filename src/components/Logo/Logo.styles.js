@@ -1,11 +1,13 @@
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 
-export const StyledLogoWrapperDiv = styled.div`
+export const StyledLogoWrapperLink = styled(Link)`
 	color: #fff;
 	display: flex;
 	flex-direction: row;
 	align-items: center;
 	width: 70%;
+	text-decoration: none;
 `;
 
 export const StyledIconWrapperDiv = styled.div`

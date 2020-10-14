@@ -1,6 +1,9 @@
 //Core
 import React from 'react';
 import PropTypes from 'prop-types';
+//Redux
+import { connect } from 'react-redux';
+import { authOperations } from 'redux/auth';
 //Styles
 import {
 	StyledUserWrapDiv,
@@ -14,7 +17,7 @@ import {
 const UserMenu = ({ uid, avatar, name, onLogout }) => (
 	<StyledUserWrapDiv>
 		<StyledAvatarWrapDiv>
-			<StyledAvatarIMG src={`${process.env.PUBLIC_URL}/avatars/user.png`} alt={name} />
+			<StyledAvatarIMG src={avatar} alt={name} />
 		</StyledAvatarWrapDiv>
 
 		<StyledNameWrapDiv>
@@ -29,13 +32,17 @@ const UserMenu = ({ uid, avatar, name, onLogout }) => (
 
 UserMenu.propTypes = {
 	name: PropTypes.string,
-	onLogout: PropTypes.func,
 	avatar: PropTypes.string,
+	onLogout: PropTypes.func.isRequired,
 };
 
 UserMenu.defaultProps = {
-	name: 'Christian Pierce',
-	avatar: 'https://icon-library.net/images/avatar-icon-images/avatar-icon-images-7.jpg',
+	name: '',
+	avatar: `${process.env.PUBLIC_URL}/avatars/unnamed.png`,
 };
 
-export default UserMenu;
+const mapDispatchToProps = {
+	onLogout: authOperations.logout,
+};
+
+export default connect(null, mapDispatchToProps)(UserMenu);

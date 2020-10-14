@@ -19,6 +19,7 @@ export const StyledAvatarIMG = styled.img`
 	display: block;
 	width: 100%;
 	height: auto;
+	border-radius: 50px;
 `;
 
 export const StyledNameWrapDiv = styled.div`

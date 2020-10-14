@@ -3,8 +3,11 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 //Components
 import Register from 'components/Register';
+//Redux
+import { connect } from 'react-redux';
+import { authOperations, authSelectors } from 'redux/auth';
 
-const RegisterPage = () => {
+const RegisterPage = ({ onRegister, error }) => {
 	const [email, setEmail] = useState('');
 	const [fullName, setFullName] = useState('');
 	const [password, setPassword] = useState('');
@@ -16,11 +19,11 @@ const RegisterPage = () => {
 	const handleSubmit = e => {
 		e.preventDefault();
 
-		//TODO: изменить метод онЛогин с редакса на сервисы
-		// this.props.onRegister(fullName, email, password);
-		setEmail('');
+		onRegister(fullName, email, password);
+
 		setFullName('');
 		setPassword('');
+		setEmail('');
 	};
 
 	return (
@@ -47,4 +50,12 @@ RegisterPage.defaultProps = {
 	error: null,
 };
 
-export default RegisterPage;
+const mapStateToProps = state => ({
+	error: authSelectors.getError(state),
+});
+
+const mapDispatchToProps = {
+	onRegister: authOperations.register,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(RegisterPage);

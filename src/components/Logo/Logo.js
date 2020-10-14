@@ -2,7 +2,7 @@
 import React from 'react';
 //Styles
 import {
-	StyledLogoWrapperDiv,
+	StyledLogoWrapperLink,
 	StyledIconWrapperDiv,
 	StyledLogoIconP,
 	StyledLogoH2,
@@ -10,7 +10,7 @@ import {
 
 const Logo = () => {
 	return (
-		<StyledLogoWrapperDiv>
+		<StyledLogoWrapperLink to="/">
 			<StyledIconWrapperDiv>
 				<StyledLogoIconP>F</StyledLogoIconP>
 			</StyledIconWrapperDiv>
@@ -18,7 +18,7 @@ const Logo = () => {
 			<StyledLogoH2>
 				Feedback <br /> app
 			</StyledLogoH2>
-		</StyledLogoWrapperDiv>
+		</StyledLogoWrapperLink>
 	);
 };
 

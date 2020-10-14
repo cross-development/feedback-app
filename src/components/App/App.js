@@ -1,22 +1,31 @@
 //Core
-import React, { Suspense } from 'react';
+import React, { Suspense, useEffect } from 'react';
+import PropTypes from 'prop-types';
 import { Switch } from 'react-router-dom';
 import { BrowserRouter as Router } from 'react-router-dom';
+//Redux
+import { connect } from 'react-redux';
+import { authOperations } from 'redux/auth';
 //Components
 import Layout from '../Layout';
+import Loader from '../Loader';
 import SideBar from '../SideBar';
-import PublicRoute from '../PublicRoute';
-import PrivateRoute from '../PrivateRoute';
 //Routes
 import routes from 'router';
+import PublicRoute from 'router/PublicRoute';
+import PrivateRoute from 'router/PrivateRoute';
 
-const App = () => {
+const App = ({ onGetCurrentUser }) => {
+	useEffect(() => {
+		onGetCurrentUser();
+	}, [onGetCurrentUser]);
+
 	return (
 		<Router>
 			<SideBar />
 
 			<Layout>
-				<Suspense fallback={null}>
+				<Suspense fallback={<Loader onLoad={true} />}>
 					<Switch>
 						{routes.map(route =>
 							route.private ? (
@@ -25,7 +34,6 @@ const App = () => {
 								<PublicRoute key={route.path} {...route} />
 							),
 						)}
-						{/* <Route component={asyncComponents.NotFoundPage} /> */}
 					</Switch>
 				</Suspense>
 			</Layout>
@@ -33,4 +41,12 @@ const App = () => {
 	);
 };
 
-export default App;
+App.propTypes = {
+	onGetCurrentUser: PropTypes.func.isRequired,
+};
+
+const mapDispatchToProps = {
+	onGetCurrentUser: authOperations.getCurrentUser,
+};
+
+export default connect(null, mapDispatchToProps)(App);

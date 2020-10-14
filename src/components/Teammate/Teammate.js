@@ -2,7 +2,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 //Components
-import StarsRating from '../StarsRating';
+import RatingList from '../RatingList';
+import TeammateCard from '../TeammateCard';
 //Styles
 import {
 	StyledLabel,
@@ -23,40 +24,21 @@ const Teammate = ({
 	onChangeWrong,
 	onChangeImprove,
 }) => {
-	const { tmName, tmAvatar, tmOccupation } = member;
-
 	return (
 		<StyledContainerDiv>
-			<div>
-				<StyledWrapperDiv>
-					<img src={`${process.env.PUBLIC_URL}/avatars/${tmAvatar}.png`} alt={tmName} />
-					<p>{tmName}</p>
-					<p>{tmOccupation}</p>
-				</StyledWrapperDiv>
-				<StyledWrapperDiv>
-					<span>&times;</span>
-					<p>ESC</p>
-				</StyledWrapperDiv>
-			</div>
+			<TeammateCard member={member} />
 
 			<StyledRatingForm onSubmit={onSubmit}>
 				<StyledFormTitleH2>Provide feedback</StyledFormTitleH2>
 
 				<StyledWrapperDiv>
 					<StyledFormSubTitleH3>Personal skills and competences</StyledFormSubTitleH3>
-
-					<StarsRating label="Leadership skills" />
-					<StarsRating label="English language knowledge" />
-					<StarsRating label="Communication skills" />
-					<StarsRating label="Problem solving" />
-					<StarsRating label="Programming skills" />
-					<StarsRating label="Ability to learning" />
-					<StarsRating label="Workflow behavior" />
-					<StarsRating label="Sense of humor" />
 				</StyledWrapperDiv>
 
 				<StyledWrapperDiv>
 					<StyledFormSubTitleH3>Write a feedback</StyledFormSubTitleH3>
+
+					<RatingList />
 
 					<StyledLabel>
 						<StyledInput
@@ -79,6 +61,7 @@ const Teammate = ({
 							placeholder="What could be improved"
 						/>
 					</StyledLabel>
+
 					<StyledButton type="submit">Submit</StyledButton>
 				</StyledWrapperDiv>
 			</StyledRatingForm>
