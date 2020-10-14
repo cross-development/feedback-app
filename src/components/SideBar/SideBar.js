@@ -1,5 +1,5 @@
 //Core
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 //Components
 import Logo from '../Logo';
@@ -12,20 +12,10 @@ import { authSelectors } from 'redux/auth';
 //Styles
 import { StyledAside } from './SideBar.styles';
 
-import teammateList from 'data/teammates.json';
-
 const SideBar = ({ existUser }) => {
 	const [filter, setFilter] = useState('');
-	// const [teammates, setTeammates] = useState(null);
-	//TODO: тут будет метод, который будет забирать всех тиммейтов с сервера
-	const teammates = [...teammateList];
 
 	const handleChangeFilter = filter => setFilter(filter);
-
-	const getVisibleTeammates = () =>
-		teammates.filter(({ tmName }) => tmName.toLowerCase().includes(filter.toLowerCase()));
-
-	const visibleTeammates = getVisibleTeammates();
 
 	return (
 		<StyledAside>
@@ -37,7 +27,7 @@ const SideBar = ({ existUser }) => {
 
 					<TeamFilter value={filter} onChangeFilter={handleChangeFilter} />
 
-					<TeammateList teammates={visibleTeammates} />
+					<TeammateList filter={filter} />
 				</>
 			)}
 		</StyledAside>
