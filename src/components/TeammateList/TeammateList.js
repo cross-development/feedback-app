@@ -47,6 +47,7 @@ TeammateList.propTypes = {
 			tmId: PropTypes.string.isRequired,
 			tmName: PropTypes.string.isRequired,
 			tmAvatar: PropTypes.string.isRequired,
+			tmOccupation: PropTypes.string.isRequired,
 		}).isRequired,
 	).isRequired,
 };

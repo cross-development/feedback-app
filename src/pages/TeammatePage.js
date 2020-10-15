@@ -1,12 +1,14 @@
 //Core
 import React, { useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
 import { useParams } from 'react-router-dom';
+//Redux
+import { connect } from 'react-redux';
+import { teammateSelectors } from 'redux/teammate';
 //Components
 import Teammate from 'components/Teammate';
 
-import teammates from 'data/teammates.json';
-
-const TeammatePage = () => {
+const TeammatePage = ({ teammates }) => {
 	const { teammateId } = useParams();
 
 	const ratingsState = {
@@ -37,8 +39,8 @@ const TeammatePage = () => {
 
 		const feedback = {
 			ratings,
-			resolution,
 			teammate,
+			resolution,
 		};
 
 		console.log(feedback);
@@ -50,11 +52,10 @@ const TeammatePage = () => {
 	};
 
 	useEffect(() => {
-		//TODO: тут будет метод, который будет забирать всех тиммейтов с сервера
 		const member = teammates.find(({ tmId }) => tmId === teammateId);
 
 		setTeammate(member);
-	}, [teammateId]);
+	}, [teammates, teammateId]);
 
 	return (
 		teammate && (
@@ -70,4 +71,19 @@ const TeammatePage = () => {
 	);
 };
 
-export default TeammatePage;
+TeammatePage.propTypes = {
+	teammates: PropTypes.arrayOf(
+		PropTypes.shape({
+			tmId: PropTypes.string.isRequired,
+			tmName: PropTypes.string.isRequired,
+			tmAvatar: PropTypes.string.isRequired,
+			tmOccupation: PropTypes.string.isRequired,
+		}).isRequired,
+	).isRequired,
+};
+
+const mapStateToProps = state => ({
+	teammates: teammateSelectors.getTeammates(state),
+});
+
+export default connect(mapStateToProps)(TeammatePage);

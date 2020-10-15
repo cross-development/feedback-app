@@ -3,6 +3,19 @@ import firebase from 'firebase';
 //Redux
 import teammateActions from './teammateActions';
 
+const addTeammate = credentials => dispatch => {
+	dispatch(teammateActions.onAddTeammateRequest());
+
+	try {
+		const userCollection = firebase.database().ref('teammates');
+		userCollection.push(credentials);
+
+		dispatch(teammateActions.onAddTeammateSuccess());
+	} catch (error) {
+		dispatch(teammateActions.onAddTeammateFailure(error));
+	}
+};
+
 const fetchTeammates = () => async dispatch => {
 	dispatch(teammateActions.getTeammatesRequest());
 
@@ -10,7 +23,10 @@ const fetchTeammates = () => async dispatch => {
 		const teammates = firebase.database().ref('teammates');
 
 		teammates.on('value', snapshot => {
-			const teammatesData = Object.values(snapshot.val());
+			const teammatesData = Object.keys(snapshot.val()).reduce((acc, key) => {
+				acc.push({ tmId: key, ...snapshot.val()[key] });
+				return acc;
+			}, []);
 
 			dispatch(teammateActions.getTeammatesSuccess(teammatesData));
 		});
@@ -20,5 +36,6 @@ const fetchTeammates = () => async dispatch => {
 };
 
 export default {
+	addTeammate,
 	fetchTeammates,
 };
