@@ -1,15 +1,18 @@
 //Core
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { useParams } from 'react-router-dom';
+import { useParams, useHistory } from 'react-router-dom';
 //Redux
 import { connect } from 'react-redux';
+import { authSelectors } from 'redux/auth';
 import { teammateSelectors } from 'redux/teammate';
+import { feedbackOperations } from 'redux/feedback';
 //Components
 import Teammate from 'components/Teammate';
 
-const TeammatePage = ({ teammates }) => {
+const TeammatePage = ({ teammates, onAddFeedback, existUser: { uid } }) => {
 	const { teammateId } = useParams();
+	const history = useHistory();
 
 	const ratingsState = {
 		leadershipSkills: 0,
@@ -43,10 +46,10 @@ const TeammatePage = ({ teammates }) => {
 			resolution,
 		};
 
-		console.log(feedback);
+		onAddFeedback(uid, feedback);
 
-		//TODO: тут будет метод, который отправит полный отзыв на сервер
-		// this.props.onFeedback(fullName, email, password);
+		history.replace('/');
+
 		setResolution(resolutionState);
 		setRatings(ratingsState);
 	};
@@ -80,10 +83,21 @@ TeammatePage.propTypes = {
 			tmOccupation: PropTypes.string.isRequired,
 		}).isRequired,
 	).isRequired,
+	existUser: PropTypes.objectOf(PropTypes.any),
+	onAddFeedback: PropTypes.func.isRequired,
+};
+
+TeammatePage.defaultProps = {
+	existUser: null,
 };
 
 const mapStateToProps = state => ({
 	teammates: teammateSelectors.getTeammates(state),
+	existUser: authSelectors.existUser(state),
 });
 
-export default connect(mapStateToProps)(TeammatePage);
+const mapDispatchToProps = {
+	onAddFeedback: feedbackOperations.addFeedback,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(TeammatePage);
