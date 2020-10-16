@@ -16,7 +16,7 @@ const addTeammate = credentials => dispatch => {
 	}
 };
 
-const fetchTeammates = () => async dispatch => {
+const getTeammates = () => async dispatch => {
 	dispatch(teammateActions.getTeammatesRequest());
 
 	try {
@@ -37,5 +37,5 @@ const fetchTeammates = () => async dispatch => {
 
 export default {
 	addTeammate,
-	fetchTeammates,
+	getTeammates,
 };

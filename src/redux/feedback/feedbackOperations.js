@@ -37,19 +37,19 @@ const updateFeedback = (userId, credentials) => async dispatch => {
 	}
 };
 
-const getFeedback = () => async dispatch => {
+const getFeedbacks = userId => dispatch => {
 	dispatch(feedbackActions.getFeedbackRequest());
 
 	try {
-		const teammates = firebase.database().ref('teammates');
+		const feedbacks = firebase.database().ref('users/' + userId + '/feedbacks');
 
-		teammates.on('value', snapshot => {
-			const teammatesData = Object.keys(snapshot.val()).reduce((acc, key) => {
-				acc.push({ tmId: key, ...snapshot.val()[key] });
+		feedbacks.on('value', snapshot => {
+			const feedbacksData = Object.keys(snapshot.val()).reduce((acc, key) => {
+				acc.push({ fbId: key, ...snapshot.val()[key] });
 				return acc;
 			}, []);
 
-			dispatch(feedbackActions.getFeedbackSuccess(teammatesData));
+			dispatch(feedbackActions.getFeedbackSuccess(feedbacksData));
 		});
 	} catch (error) {
 		dispatch(feedbackActions.getFeedbackFailure(error));
@@ -59,7 +59,7 @@ const getFeedback = () => async dispatch => {
 export default {
 	addFeedback,
 	updateFeedback,
-	getFeedback,
+	getFeedbacks,
 };
 
 // const favMovies = firebase.database().ref('users/' + userId + '/favorites');

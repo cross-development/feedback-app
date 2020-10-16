@@ -1,17 +1,17 @@
 //Core
 import { createAction } from '@reduxjs/toolkit';
 
-const addFeedbackRequest = createAction('collection/addFeedbackRequest');
-const addFeedbackSuccess = createAction('collection/addFeedbackSuccess');
-const addFeedbackFailure = createAction('collection/addFeedbackFailure');
+const addFeedbackRequest = createAction('feedbacks/addFeedbackRequest');
+const addFeedbackSuccess = createAction('feedbacks/addFeedbackSuccess');
+const addFeedbackFailure = createAction('feedbacks/addFeedbackFailure');
 
-const updateFeedbackRequest = createAction('collection/updateFeedbackRequest');
-const updateFeedbackSuccess = createAction('collection/updateFeedbackSuccess');
-const updateFeedbackFailure = createAction('collection/updateFeedbackFailure');
+const updateFeedbackRequest = createAction('feedbacks/updateFeedbackRequest');
+const updateFeedbackSuccess = createAction('feedbacks/updateFeedbackSuccess');
+const updateFeedbackFailure = createAction('feedbacks/updateFeedbackFailure');
 
-const getFeedbackRequest = createAction('collection/getFeedbackRequest');
-const getFeedbackSuccess = createAction('collection/getFeedbackSuccess');
-const getFeedbackFailure = createAction('collection/getFeedbackFailure');
+const getFeedbackRequest = createAction('feedbacks/getFeedbackRequest');
+const getFeedbackSuccess = createAction('feedbacks/getFeedbackSuccess');
+const getFeedbackFailure = createAction('feedbacks/getFeedbackFailure');
 
 export default {
 	addFeedbackRequest,

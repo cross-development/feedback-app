@@ -1,13 +1,13 @@
 //Core
 import { createAction } from '@reduxjs/toolkit';
 
-const onAddTeammateRequest = createAction('collection/onAddTeammateRequest');
-const onAddTeammateSuccess = createAction('collection/onAddTeammateSuccess');
-const onAddTeammateFailure = createAction('collection/onAddTeammateFailure');
+const onAddTeammateRequest = createAction('teammates/onAddTeammateRequest');
+const onAddTeammateSuccess = createAction('teammates/onAddTeammateSuccess');
+const onAddTeammateFailure = createAction('teammates/onAddTeammateFailure');
 
-const getTeammatesRequest = createAction('collection/getTeammatesRequest');
-const getTeammatesSuccess = createAction('collection/getTeammatesSuccess');
-const getTeammatesFailure = createAction('collection/getTeammatesFailure');
+const getTeammatesRequest = createAction('teammates/getTeammatesRequest');
+const getTeammatesSuccess = createAction('teammates/getTeammatesSuccess');
+const getTeammatesFailure = createAction('teammates/getTeammatesFailure');
 
 export default {
 	onAddTeammateRequest,

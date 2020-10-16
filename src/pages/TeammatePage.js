@@ -5,12 +5,13 @@ import { useParams, useHistory } from 'react-router-dom';
 //Redux
 import { connect } from 'react-redux';
 import { authSelectors } from 'redux/auth';
+import { feedbackSelectors } from 'redux/feedback';
 import { teammateSelectors } from 'redux/teammate';
 import { feedbackOperations } from 'redux/feedback';
 //Components
 import Teammate from 'components/Teammate';
 
-const TeammatePage = ({ teammates, onAddFeedback, existUser: { uid } }) => {
+const TeammatePage = ({ existUser, teammates, feedbacks, onAddFeedback }) => {
 	const { teammateId } = useParams();
 	const history = useHistory();
 
@@ -30,9 +31,12 @@ const TeammatePage = ({ teammates, onAddFeedback, existUser: { uid } }) => {
 		wrong: '',
 	};
 
+	const { uid } = existUser;
+
 	const [resolution, setResolution] = useState(resolutionState);
 	const [ratings, setRatings] = useState(ratingsState);
 	const [teammate, setTeammate] = useState(null);
+	const [feedback, setFeedback] = useState(null);
 
 	const handleChangeRatings = value => setRatings(value);
 	const handleChangeResolution = value => setResolution(value);
@@ -40,13 +44,13 @@ const TeammatePage = ({ teammates, onAddFeedback, existUser: { uid } }) => {
 	const handleSubmit = e => {
 		e.preventDefault();
 
-		const feedback = {
+		const teammateFeedback = {
 			ratings,
 			teammate,
 			resolution,
 		};
 
-		onAddFeedback(uid, feedback);
+		onAddFeedback(uid, teammateFeedback);
 
 		history.replace('/');
 
@@ -56,16 +60,25 @@ const TeammatePage = ({ teammates, onAddFeedback, existUser: { uid } }) => {
 
 	useEffect(() => {
 		const member = teammates.find(({ tmId }) => tmId === teammateId);
-
 		setTeammate(member);
-	}, [teammates, teammateId]);
+
+		const currentFeedback = feedbacks.find(({ teammate }) => teammate.tmId === teammateId);
+
+		if (!currentFeedback) return setFeedback(null);
+
+		const { ratings, resolution } = currentFeedback;
+		setFeedback({ ratings, resolution });
+	}, [teammates, feedbacks, uid, teammateId]);
+
+	const feedbackRatings = feedback ? feedback.ratings : ratings;
+	const feedbackResolutions = feedback ? feedback.resolution : resolution;
 
 	return (
 		teammate && (
 			<Teammate
 				member={teammate}
-				ratingsState={ratings}
-				resolutionState={resolution}
+				ratingsState={feedbackRatings}
+				resolutionState={feedbackResolutions}
 				onSubmit={handleSubmit}
 				handleRatings={handleChangeRatings}
 				handleResolution={handleChangeResolution}
@@ -83,8 +96,36 @@ TeammatePage.propTypes = {
 			tmOccupation: PropTypes.string.isRequired,
 		}).isRequired,
 	).isRequired,
+
 	existUser: PropTypes.objectOf(PropTypes.any),
+
 	onAddFeedback: PropTypes.func.isRequired,
+
+	feedbacks: PropTypes.arrayOf(
+		PropTypes.shape({
+			fbId: PropTypes.string.isRequired,
+			ratings: PropTypes.shape({
+				leadershipSkills: PropTypes.number.isRequired,
+				englishKnowledge: PropTypes.number.isRequired,
+				communicateSkills: PropTypes.number.isRequired,
+				problemSolving: PropTypes.number.isRequired,
+				programmingSkills: PropTypes.number.isRequired,
+				abilityLearning: PropTypes.number.isRequired,
+				workflowBehavior: PropTypes.number.isRequired,
+				senseOfHumor: PropTypes.number.isRequired,
+			}).isRequired,
+			resolution: PropTypes.exact({
+				improve: PropTypes.string.isRequired,
+				wrong: PropTypes.string.isRequired,
+			}).isRequired,
+			teammates: PropTypes.exact({
+				tmId: PropTypes.string.isRequired,
+				tmName: PropTypes.string.isRequired,
+				tmAvatar: PropTypes.string.isRequired,
+				tmOccupation: PropTypes.string.isRequired,
+			}),
+		}).isRequired,
+	).isRequired,
 };
 
 TeammatePage.defaultProps = {
@@ -92,8 +133,9 @@ TeammatePage.defaultProps = {
 };
 
 const mapStateToProps = state => ({
-	teammates: teammateSelectors.getTeammates(state),
 	existUser: authSelectors.existUser(state),
+	teammates: teammateSelectors.getTeammates(state),
+	feedbacks: feedbackSelectors.getFeedbacks(state),
 });
 
 const mapDispatchToProps = {

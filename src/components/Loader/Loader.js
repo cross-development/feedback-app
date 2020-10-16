@@ -8,23 +8,25 @@ import { LoaderWrapperDiv } from './Loader.styles';
 import { css } from '@emotion/core';
 
 //Custom css
-const customCss = css`
+const beatCss = css`
 	display: block;
 	margin: 20% auto;
 `;
 
-const Loader = ({ onLoad }) => (
+const Loader = ({ onLoad, size }) => (
 	<LoaderWrapperDiv>
-		<BeatLoader size={30} color="#22282D" loading={onLoad} css={customCss} />
+		<BeatLoader size={size} color="#A7A99F" loading={onLoad} css={beatCss} />
 	</LoaderWrapperDiv>
 );
 
-Loader.defaultProps = {
-	onLoad: false,
-};
-
 Loader.propTypes = {
 	onLoad: PropTypes.bool,
+	size: PropTypes.number,
+};
+
+Loader.defaultProps = {
+	onLoad: false,
+	size: 40,
 };
 
 export default Loader;

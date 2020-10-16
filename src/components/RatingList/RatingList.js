@@ -6,15 +6,21 @@ import Rating from '@material-ui/lab/Rating';
 //Data
 import ratingsListData from 'data/ratingsList.json';
 //Styles
+import { withStyles } from '@material-ui/core/styles';
 import { StyledRatingUl, StyledRatingLi } from './RatingList.styles';
-//
+
+const StyledRatingStar = withStyles({
+	iconFilled: { color: '#ff3d47' },
+	iconHover: { color: '#EC1940' },
+})(Rating);
+
 const RatingList = ({ state, handleRatings }) => {
 	return (
 		<StyledRatingUl>
 			{ratingsListData.map(({ title, label }) => (
 				<StyledRatingLi key={label}>
 					{title}
-					<Rating
+					<StyledRatingStar
 						name={`${label}`}
 						value={state[`${label}`]}
 						onChange={(event, newValue) => {

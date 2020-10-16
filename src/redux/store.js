@@ -8,7 +8,7 @@ import { teammateReducers } from 'redux/teammate';
 const store = configureStore({
 	reducer: {
 		auth: authReducers,
-		feedback: feedbackReducers,
+		feedbacks: feedbackReducers,
 		teammates: teammateReducers,
 	},
 });

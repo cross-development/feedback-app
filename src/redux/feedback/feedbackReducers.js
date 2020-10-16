@@ -5,8 +5,7 @@ import { createReducer } from '@reduxjs/toolkit';
 import feedbackActions from './feedbackActions';
 
 //Feedback reducer
-const item = createReducer(null, {
-	// [feedbackActions.addFeedbackSuccess]: (state, { payload }) => payload,
+const items = createReducer([], {
 	[feedbackActions.updateFeedbackSuccess]: (state, { payload }) => ({ ...state, payload }),
 	[feedbackActions.getFeedbackSuccess]: (state, { payload }) => payload,
 });
@@ -34,7 +33,7 @@ const error = createReducer(null, {
 });
 
 export default combineReducers({
-	item,
+	items,
 	loading,
 	error,
 });

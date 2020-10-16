@@ -1,11 +1,11 @@
-const getFeedback = state => state.feedback.item;
+const getFeedbacks = state => state.feedbacks.items;
 
-const getLoading = state => state.feedback.loading;
+const getLoading = state => state.feedbacks.loading;
 
-const getError = state => state.feedback.error;
+const getError = state => state.feedbacks.error;
 
 export default {
-	getFeedback,
+	getFeedbacks,
 	getLoading,
 	getError,
 };
