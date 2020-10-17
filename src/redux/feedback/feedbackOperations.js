@@ -61,11 +61,3 @@ export default {
 	updateFeedback,
 	getFeedbacks,
 };
-
-// const favMovies = firebase.database().ref('users/' + userId + '/favorites');
-
-// 		favMovies.on('value', snapshot => {
-// 			const favMovieData = Object.values(snapshot.val());
-
-// 			dispatch(collectionActions.getFavoriteMoviesSuccess(favMovieData));
-// 		});

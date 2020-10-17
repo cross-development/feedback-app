@@ -1,31 +1,30 @@
 //Core
-import React, { useEffect } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 //Redux
 import { connect } from 'react-redux';
 import { authSelectors } from 'redux/auth';
 import { teammateSelectors } from 'redux/teammate';
-import { teammateOperations } from 'redux/teammate';
-import { feedbackOperations } from 'redux/feedback';
+import { feedbackSelectors } from 'redux/feedback';
 //Styles
-import { StyledNameSpan, StyledAvatarIMG } from './TeammateList.styles';
 import { StylesTeamUL, StyledTeamLI, StyledTeamLink } from './TeammateList.styles';
+import { StyledNameSpan, StyledAvatarIMG, StyledStatusSpan } from './TeammateList.styles';
 
-const TeammateList = ({ filter, teammates, onGetTeammates, existUser, onGetFeedbacks }) => {
-	//TODO: исправить, 2 ре-рендера
-	useEffect(() => {
-		onGetTeammates();
-		onGetFeedbacks(existUser.uid);
-	}, [onGetTeammates, onGetFeedbacks, existUser]);
-
-	const getVisibleTeammates = () =>
+const TeammateList = ({ filter, existUser, teammates, feedbacks }) => {
+	const getVisibleTeammates = teammates =>
 		teammates.filter(({ tmName }) => tmName.toLowerCase().includes(filter.toLowerCase()));
 
-	const visibleTeammates = getVisibleTeammates();
+	const visibleTeammates = getVisibleTeammates(teammates);
+
+	const getTeammatesWithFeedbackStatus = (visibleTeammates, feedbacks) => {};
+
+	const tmWithFbStatus = getTeammatesWithFeedbackStatus(visibleTeammates, feedbacks);
+
+	console.log('tmWithFbStatus ', tmWithFbStatus);
 
 	return (
 		<StylesTeamUL>
-			{visibleTeammates.map(({ tmId, tmName, tmAvatar }) => (
+			{visibleTeammates.map(({ tmId, tmName, tmAvatar, isAccepted }) => (
 				<StyledTeamLI key={tmId}>
 					<StyledTeamLink to={`/teammates/${tmId}`}>
 						<StyledAvatarIMG
@@ -33,6 +32,7 @@ const TeammateList = ({ filter, teammates, onGetTeammates, existUser, onGetFeedb
 							alt={tmName}
 						/>
 						<StyledNameSpan>{tmName}</StyledNameSpan>
+						<StyledStatusSpan isAccepted={isAccepted}></StyledStatusSpan>
 					</StyledTeamLink>
 				</StyledTeamLI>
 			))}
@@ -51,8 +51,6 @@ TeammateList.propTypes = {
 			tmOccupation: PropTypes.string.isRequired,
 		}).isRequired,
 	).isRequired,
-	onGetTeammates: PropTypes.func.isRequired,
-	onGetFeedbacks: PropTypes.func.isRequired,
 };
 
 TeammateList.defaultProps = {
@@ -63,11 +61,7 @@ TeammateList.defaultProps = {
 const mapStateToProps = state => ({
 	existUser: authSelectors.existUser(state),
 	teammates: teammateSelectors.getTeammates(state),
+	feedbacks: feedbackSelectors.getFeedbacks(state),
 });
 
-const mapDispatchToProps = {
-	onGetTeammates: teammateOperations.getTeammates,
-	onGetFeedbacks: feedbackOperations.getFeedbacks,
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(TeammateList);
+export default connect(mapStateToProps)(TeammateList);

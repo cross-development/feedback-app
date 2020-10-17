@@ -6,7 +6,7 @@ import feedbackActions from './feedbackActions';
 
 //Feedback reducer
 const items = createReducer([], {
-	[feedbackActions.updateFeedbackSuccess]: (state, { payload }) => ({ ...state, payload }),
+	// [feedbackActions.updateFeedbackSuccess]: (state, { payload }) => ({ ...state, payload }),
 	[feedbackActions.getFeedbackSuccess]: (state, { payload }) => payload,
 });
 

@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 
 export const StylesTeamUL = styled.ul`
 	list-style: none;
@@ -25,18 +25,21 @@ export const StylesTeamUL = styled.ul`
 `;
 
 export const StyledTeamLI = styled.li`
-	&:not(:last-of-type) {
-		margin-bottom: 1rem;
-	}
+	/* ... */
 `;
 
-export const StyledTeamLink = styled(Link)`
+export const StyledTeamLink = styled(NavLink)`
 	text-decoration: none;
 	color: #fff;
 	display: flex;
 	flex-direction: row;
 	justify-content: flex-start;
 	align-items: center;
+	padding: 0.7rem;
+
+	&.active {
+		background-color: #616161;
+	}
 `;
 
 export const StyledAvatarIMG = styled.img`
@@ -45,4 +48,14 @@ export const StyledAvatarIMG = styled.img`
 
 export const StyledNameSpan = styled.span`
 	/* ... */
+`;
+
+export const StyledStatusSpan = styled.span`
+	width: 15px;
+	height: 15px;
+	display: ${props => (props.isAccepted ? 'block' : 'none')};
+	background-color: #8bc34a;
+	border-radius: 50px;
+	margin-left: auto;
+	margin-right: 0;
 `;

@@ -1,5 +1,5 @@
 //Core
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 //Components
 import Logo from '../Logo';
@@ -11,11 +11,18 @@ import TeammateList from '../TeammateList';
 import { connect } from 'react-redux';
 import { authSelectors } from 'redux/auth';
 import { teammateSelectors } from 'redux/teammate';
+import { feedbackOperations } from 'redux/feedback';
 //Styles
 import { StyledAside } from './SideBar.styles';
 
-const SideBar = ({ existUser, teammatesLoading }) => {
+const SideBar = ({ existUser, teammatesLoading, onGetFeedbacks }) => {
 	const [filter, setFilter] = useState('');
+
+	useEffect(() => {
+		if (!existUser) return;
+
+		onGetFeedbacks(existUser.uid);
+	}, [onGetFeedbacks, existUser]);
 
 	const handleChangeFilter = filter => setFilter(filter);
 
@@ -42,6 +49,8 @@ const SideBar = ({ existUser, teammatesLoading }) => {
 
 SideBar.propTypes = {
 	existUser: PropTypes.objectOf(PropTypes.any),
+	teammatesLoading: PropTypes.bool.isRequired,
+	onGetFeedbacks: PropTypes.func.isRequired,
 };
 
 SideBar.defaultProps = {
@@ -53,4 +62,8 @@ const mapStateToProps = state => ({
 	teammatesLoading: teammateSelectors.getLoading(state),
 });
 
-export default connect(mapStateToProps)(SideBar);
+const mapDispatchToProps = {
+	onGetFeedbacks: feedbackOperations.getFeedbacks,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(SideBar);

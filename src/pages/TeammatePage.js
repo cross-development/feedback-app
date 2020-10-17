@@ -46,8 +46,8 @@ const TeammatePage = ({ existUser, teammates, feedbacks, onAddFeedback }) => {
 
 		const teammateFeedback = {
 			ratings,
-			teammate,
 			resolution,
+			teammate: { ...teammate, isAccepted: true },
 		};
 
 		onAddFeedback(uid, teammateFeedback);

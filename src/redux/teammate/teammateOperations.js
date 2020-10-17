@@ -16,7 +16,7 @@ const addTeammate = credentials => dispatch => {
 	}
 };
 
-const getTeammates = () => async dispatch => {
+const getTeammates = () => dispatch => {
 	dispatch(teammateActions.getTeammatesRequest());
 
 	try {

@@ -5,7 +5,8 @@ import { Switch } from 'react-router-dom';
 import { BrowserRouter as Router } from 'react-router-dom';
 //Redux
 import { connect } from 'react-redux';
-import { authOperations } from 'redux/auth';
+import { teammateOperations } from 'redux/teammate';
+import { authOperations, authSelectors } from 'redux/auth';
 //Components
 import Layout from '../Layout';
 import Loader from '../Loader';
@@ -15,10 +16,11 @@ import routes from 'router';
 import PublicRoute from 'router/PublicRoute';
 import PrivateRoute from 'router/PrivateRoute';
 
-const App = ({ onGetCurrentUser }) => {
+const App = ({ onGetCurrentUser, onGetTeammates }) => {
 	useEffect(() => {
 		onGetCurrentUser();
-	}, [onGetCurrentUser]);
+		onGetTeammates();
+	}, [onGetCurrentUser, onGetTeammates]);
 
 	return (
 		<Router>
@@ -43,10 +45,17 @@ const App = ({ onGetCurrentUser }) => {
 
 App.propTypes = {
 	onGetCurrentUser: PropTypes.func.isRequired,
+	onGetTeammates: PropTypes.func.isRequired,
 };
+
+const mapStateToProps = state => ({
+	// existUser: authSelectors.existUser(state),
+	// userLoading: authSelectors.getLoading(state),
+});
 
 const mapDispatchToProps = {
 	onGetCurrentUser: authOperations.getCurrentUser,
+	onGetTeammates: teammateOperations.getTeammates,
 };
 
-export default connect(null, mapDispatchToProps)(App);
+export default connect(mapStateToProps, mapDispatchToProps)(App);
