@@ -16,11 +16,14 @@ const TeammateList = ({ filter, existUser, teammates, feedbacks }) => {
 
 	const visibleTeammates = getVisibleTeammates(teammates);
 
-	const getTeammatesWithFeedbackStatus = (visibleTeammates, feedbacks) => {};
+	const getTeammatesWithFeedbackStatus = (visibleTeammates, feedbacks) => {
+		console.log(feedbacks);
+		if (feedbacks.length < 1) return visibleTeammates;
+	};
 
-	const tmWithFbStatus = getTeammatesWithFeedbackStatus(visibleTeammates, feedbacks);
+	const teammatesWithFbStatus = getTeammatesWithFeedbackStatus(visibleTeammates, feedbacks);
 
-	console.log('tmWithFbStatus ', tmWithFbStatus);
+	console.log('teammatesWithFbStatus ', teammatesWithFbStatus);
 
 	return (
 		<StylesTeamUL>

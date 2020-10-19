@@ -21,8 +21,8 @@ const SideBar = ({ existUser, teammatesLoading, onGetFeedbacks }) => {
 	useEffect(() => {
 		if (!existUser) return;
 
-		onGetFeedbacks(existUser.uid);
-	}, [onGetFeedbacks, existUser]);
+		!teammatesLoading && onGetFeedbacks(existUser.uid);
+	}, [onGetFeedbacks, teammatesLoading, existUser]);
 
 	const handleChangeFilter = filter => setFilter(filter);
 
