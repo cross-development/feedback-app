@@ -31,8 +31,6 @@ const TeammatePage = ({ existUser, teammates, feedbacks, onAddFeedback }) => {
 		wrong: '',
 	};
 
-	const { uid } = existUser;
-
 	const [resolution, setResolution] = useState(resolutionState);
 	const [ratings, setRatings] = useState(ratingsState);
 	const [teammate, setTeammate] = useState(null);
@@ -50,7 +48,7 @@ const TeammatePage = ({ existUser, teammates, feedbacks, onAddFeedback }) => {
 			teammate: { ...teammate, isAccepted: true },
 		};
 
-		onAddFeedback(uid, teammateFeedback);
+		onAddFeedback(existUser.uid, teammateFeedback);
 
 		history.replace('/');
 
@@ -59,16 +57,26 @@ const TeammatePage = ({ existUser, teammates, feedbacks, onAddFeedback }) => {
 	};
 
 	useEffect(() => {
-		const member = teammates.find(({ tmId }) => tmId === teammateId);
-		setTeammate(member);
+		const currentTeammate = teammates.find(({ tmId }) => tmId === teammateId);
 
+		if (!currentTeammate) return setTeammate(null);
+
+		setTeammate(currentTeammate);
+	}, [teammates, teammateId]);
+
+	useEffect(() => {
 		const currentFeedback = feedbacks.find(({ teammate }) => teammate.tmId === teammateId);
 
-		if (!currentFeedback) return setFeedback(null);
+		if (!currentFeedback) {
+			setFeedback(null);
+			setRatings(ratingsState);
+			setResolution(resolutionState);
+			return;
+		}
 
 		const { ratings, resolution } = currentFeedback;
 		setFeedback({ ratings, resolution });
-	}, [teammates, feedbacks, uid, teammateId]);
+	}, [feedbacks, ratingsState, resolutionState, teammateId]);
 
 	const feedbackRatings = feedback ? feedback.ratings : ratings;
 	const feedbackResolutions = feedback ? feedback.resolution : resolution;

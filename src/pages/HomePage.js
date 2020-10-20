@@ -8,7 +8,7 @@ import Main from 'components/Main';
 import { connect } from 'react-redux';
 import { authSelectors } from 'redux/auth';
 
-const HomePage = ({ existUser }) => (existUser ? <Main /> : <Home />);
+const HomePage = ({ existUser, userLoading }) => (existUser || !userLoading ? <Main /> : <Home />);
 
 HomePage.propTypes = {
 	existUser: PropTypes.objectOf(PropTypes.any),
@@ -20,6 +20,7 @@ HomePage.defaultProps = {
 
 const mapStateToProps = state => ({
 	existUser: authSelectors.existUser(state),
+	userLoading: authSelectors.getLoading(state),
 });
 
 export default connect(mapStateToProps)(HomePage);

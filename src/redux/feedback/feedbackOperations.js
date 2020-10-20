@@ -44,7 +44,13 @@ const getFeedbacks = userId => dispatch => {
 		const feedbacks = firebase.database().ref('users/' + userId + '/feedbacks');
 
 		feedbacks.on('value', snapshot => {
-			const feedbacksData = Object.keys(snapshot.val()).reduce((acc, key) => {
+			let feedbacksData = [];
+
+			if (!snapshot.val()) {
+				return dispatch(feedbackActions.getFeedbackSuccess(feedbacksData));
+			}
+
+			feedbacksData = Object.keys(snapshot.val()).reduce((acc, key) => {
 				acc.push({ fbId: key, ...snapshot.val()[key] });
 				return acc;
 			}, []);

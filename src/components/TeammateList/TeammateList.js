@@ -3,27 +3,23 @@ import React from 'react';
 import PropTypes from 'prop-types';
 //Redux
 import { connect } from 'react-redux';
-import { authSelectors } from 'redux/auth';
 import { teammateSelectors } from 'redux/teammate';
 import { feedbackSelectors } from 'redux/feedback';
 //Styles
 import { StylesTeamUL, StyledTeamLI, StyledTeamLink } from './TeammateList.styles';
 import { StyledNameSpan, StyledAvatarIMG, StyledStatusSpan } from './TeammateList.styles';
 
-const TeammateList = ({ filter, existUser, teammates, feedbacks }) => {
+const TeammateList = ({ filter, teammates, feedbacks }) => {
 	const getVisibleTeammates = teammates =>
 		teammates.filter(({ tmName }) => tmName.toLowerCase().includes(filter.toLowerCase()));
 
 	const visibleTeammates = getVisibleTeammates(teammates);
 
 	const getTeammatesWithFeedbackStatus = (visibleTeammates, feedbacks) => {
-		console.log(feedbacks);
-		console.log(visibleTeammates);
 		if (feedbacks.length < 1) return visibleTeammates;
 
 		const newArray = visibleTeammates.map(teammate => {
 			const reviewedTeammate = feedbacks.find(feedback => teammate.tmId === feedback.teammate.tmId);
-
 			return reviewedTeammate ? { ...teammate, isAccepted: true } : teammate;
 		});
 
@@ -31,8 +27,6 @@ const TeammateList = ({ filter, existUser, teammates, feedbacks }) => {
 	};
 
 	const teammatesWithFbStatus = getTeammatesWithFeedbackStatus(visibleTeammates, feedbacks);
-
-	console.log('teammatesWithFbStatus ', teammatesWithFbStatus);
 
 	return (
 		<StylesTeamUL>
@@ -71,7 +65,6 @@ TeammateList.defaultProps = {
 };
 
 const mapStateToProps = state => ({
-	existUser: authSelectors.existUser(state),
 	teammates: teammateSelectors.getTeammates(state),
 	feedbacks: feedbackSelectors.getFeedbacks(state),
 });
