@@ -1,5 +1,5 @@
 //Core
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 //Components
 import Logo from '../Logo';
@@ -11,18 +11,12 @@ import TeammateList from '../TeammateList';
 import { connect } from 'react-redux';
 import { authSelectors } from 'redux/auth';
 import { teammateSelectors } from 'redux/teammate';
-import { feedbackOperations } from 'redux/feedback';
+import { feedbackSelectors } from 'redux/feedback';
 //Styles
 import { StyledAside } from './SideBar.styles';
 
-const SideBar = ({ existUser, teammatesLoading, onGetFeedbacks }) => {
+const SideBar = ({ existUser, teammatesLoading, feedbacksLoading }) => {
 	const [filter, setFilter] = useState('');
-
-	useEffect(() => {
-		if (!existUser) return;
-
-		!teammatesLoading && onGetFeedbacks(existUser.uid);
-	}, [onGetFeedbacks, teammatesLoading, existUser]);
 
 	const handleChangeFilter = filter => setFilter(filter);
 
@@ -36,7 +30,7 @@ const SideBar = ({ existUser, teammatesLoading, onGetFeedbacks }) => {
 
 					<TeamFilter value={filter} onChangeFilter={handleChangeFilter} />
 
-					{teammatesLoading ? (
+					{teammatesLoading || feedbacksLoading ? (
 						<Loader onLoad={teammatesLoading} size={20} />
 					) : (
 						<TeammateList filter={filter} />
@@ -50,7 +44,7 @@ const SideBar = ({ existUser, teammatesLoading, onGetFeedbacks }) => {
 SideBar.propTypes = {
 	existUser: PropTypes.objectOf(PropTypes.any),
 	teammatesLoading: PropTypes.bool.isRequired,
-	onGetFeedbacks: PropTypes.func.isRequired,
+	feedbacksLoading: PropTypes.bool.isRequired,
 };
 
 SideBar.defaultProps = {
@@ -59,11 +53,8 @@ SideBar.defaultProps = {
 
 const mapStateToProps = state => ({
 	existUser: authSelectors.existUser(state),
+	feedbacksLoading: feedbackSelectors.getLoading(state),
 	teammatesLoading: teammateSelectors.getLoading(state),
 });
 
-const mapDispatchToProps = {
-	onGetFeedbacks: feedbackOperations.getFeedbacks,
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(SideBar);
+export default connect(mapStateToProps)(SideBar);

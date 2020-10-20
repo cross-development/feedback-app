@@ -18,7 +18,16 @@ const TeammateList = ({ filter, existUser, teammates, feedbacks }) => {
 
 	const getTeammatesWithFeedbackStatus = (visibleTeammates, feedbacks) => {
 		console.log(feedbacks);
+		console.log(visibleTeammates);
 		if (feedbacks.length < 1) return visibleTeammates;
+
+		const newArray = visibleTeammates.map(teammate => {
+			const reviewedTeammate = feedbacks.find(feedback => teammate.tmId === feedback.teammate.tmId);
+
+			return reviewedTeammate ? { ...teammate, isAccepted: true } : teammate;
+		});
+
+		return newArray;
 	};
 
 	const teammatesWithFbStatus = getTeammatesWithFeedbackStatus(visibleTeammates, feedbacks);
@@ -27,7 +36,7 @@ const TeammateList = ({ filter, existUser, teammates, feedbacks }) => {
 
 	return (
 		<StylesTeamUL>
-			{visibleTeammates.map(({ tmId, tmName, tmAvatar, isAccepted }) => (
+			{teammatesWithFbStatus.map(({ tmId, tmName, tmAvatar, isAccepted }) => (
 				<StyledTeamLI key={tmId}>
 					<StyledTeamLink to={`/teammates/${tmId}`}>
 						<StyledAvatarIMG
