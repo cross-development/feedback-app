@@ -11,6 +11,7 @@ import { StyledLabel, StyledInput, StyledContainerDiv, StyledSubtitleH3 } from '
 const Teammate = ({
 	member,
 	onSubmit,
+	isReviewed,
 	ratingsState,
 	resolutionState,
 	handleRatings,
@@ -37,6 +38,7 @@ const Teammate = ({
 							autoComplete="off"
 							placeholder="What is wrong"
 							value={resolutionState.wrong}
+							inputLength={resolutionState.wrong}
 							onChange={e => handleResolution({ ...resolutionState, wrong: e.target.value })}
 						/>
 					</StyledLabel>
@@ -47,12 +49,13 @@ const Teammate = ({
 							name="improve"
 							autoComplete="off"
 							value={resolutionState.improve}
+							inputLength={resolutionState.improve}
 							placeholder="What could be improved"
 							onChange={e => handleResolution({ ...resolutionState, improve: e.target.value })}
 						/>
 					</StyledLabel>
 
-					<StyledButton type="submit">Submit</StyledButton>
+					<StyledButton type="submit">{isReviewed ? 'Update' : 'Submit'}</StyledButton>
 				</StyledWrapperDiv>
 			</StyledRatingForm>
 		</StyledContainerDiv>

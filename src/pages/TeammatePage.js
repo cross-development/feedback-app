@@ -11,7 +11,7 @@ import { feedbackOperations } from 'redux/feedback';
 //Components
 import Teammate from 'components/Teammate';
 
-const TeammatePage = ({ existUser, teammates, feedbacks, onAddFeedback }) => {
+const TeammatePage = ({ existUser, teammates, feedbacks, onAddFeedback, onUpdateFeedback }) => {
 	const { teammateId } = useParams();
 	const history = useHistory();
 
@@ -35,26 +35,8 @@ const TeammatePage = ({ existUser, teammates, feedbacks, onAddFeedback }) => {
 	const [ratings, setRatings] = useState(ratingsState);
 	const [teammate, setTeammate] = useState(null);
 	const [feedback, setFeedback] = useState(null);
-
-	const handleChangeRatings = value => setRatings(value);
-	const handleChangeResolution = value => setResolution(value);
-
-	const handleSubmit = e => {
-		e.preventDefault();
-
-		const teammateFeedback = {
-			ratings,
-			resolution,
-			teammate: { ...teammate, isAccepted: true },
-		};
-
-		onAddFeedback(existUser.uid, teammateFeedback);
-
-		history.replace('/');
-
-		setResolution(resolutionState);
-		setRatings(ratingsState);
-	};
+	const [isReviewed, setIsReviewed] = useState(false);
+	const [isUpdated, setIsUpdated] = useState(false);
 
 	useEffect(() => {
 		const currentTeammate = teammates.find(({ tmId }) => tmId === teammateId);
@@ -76,7 +58,49 @@ const TeammatePage = ({ existUser, teammates, feedbacks, onAddFeedback }) => {
 
 		const { ratings, resolution } = currentFeedback;
 		setFeedback({ ratings, resolution });
+		setIsReviewed(true); //here
+		setIsUpdated(false); //here
 	}, [feedbacks, ratingsState, resolutionState, teammateId]);
+
+	const handleChangeRatings = value => setRatings(value);
+	const handleChangeResolution = value => setResolution(value);
+
+	const handleSubmit = e => {
+		e.preventDefault();
+
+		const teammateFeedback = {
+			ratings,
+			resolution,
+			teammate: { ...teammate, isAccepted: true },
+		};
+
+		if (isReviewed) {
+			setFeedback(null); //here
+			setIsUpdated(true); //here
+			setIsReviewed(false); //here
+			setRatings(ratingsState); //here
+			setResolution(resolutionState); //here
+			return;
+		}
+
+		if (isUpdated) {
+			onUpdateFeedback(existUser.uid, teammateFeedback); //here
+			setIsUpdated(true); //here
+		} else {
+			onAddFeedback(existUser.uid, teammateFeedback); //here
+			setIsReviewed(false); //here
+		}
+
+		// isUpdated
+		// 	? onUpdateFeedback(existUser.uid, teammateFeedback)
+		// 	: onAddFeedback(existUser.uid, teammateFeedback);
+		setResolution(resolutionState); //here
+		setRatings(ratingsState); //here
+		// setIsReviewed(true);
+		// setIsUpdated(false);
+
+		history.replace('/'); //here
+	};
 
 	const feedbackRatings = feedback ? feedback.ratings : ratings;
 	const feedbackResolutions = feedback ? feedback.resolution : resolution;
@@ -85,6 +109,7 @@ const TeammatePage = ({ existUser, teammates, feedbacks, onAddFeedback }) => {
 		teammate && (
 			<Teammate
 				member={teammate}
+				isReviewed={isReviewed}
 				ratingsState={feedbackRatings}
 				resolutionState={feedbackResolutions}
 				onSubmit={handleSubmit}
@@ -148,6 +173,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = {
 	onAddFeedback: feedbackOperations.addFeedback,
+	onUpdateFeedback: feedbackOperations.updateFeedback,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(TeammatePage);

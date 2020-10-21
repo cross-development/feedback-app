@@ -38,10 +38,6 @@ export const StyledLabel = styled.label`
 	display: block;
 	margin-bottom: 30px;
 	width: 100%;
-
-	/* &:last-of-type {
-		margin-bottom: 50px;
-	} */
 `;
 
 export const StyledInput = styled.input`
@@ -50,7 +46,7 @@ export const StyledInput = styled.input`
 	font-size: 1.1rem;
 	padding: 6px 0;
 	border: none;
-	border-bottom: 2px solid #bdbdbd;
+	border-bottom: 2px solid ${({ inputLength }) => (inputLength ? '#EC1940' : '#bdbdbd')};
 	width: 100%;
 	outline: 0;
 

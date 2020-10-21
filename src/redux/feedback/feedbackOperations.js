@@ -20,18 +20,23 @@ const updateFeedback = (userId, credentials) => async dispatch => {
 	dispatch(feedbackActions.updateFeedbackRequest());
 
 	try {
-		const favMovies = firebase.database().ref('users/' + userId + '/favorites');
+		const { teammate, ratings, resolution } = credentials;
+		const feedbacks = firebase.database().ref('users/' + userId + '/feedbacks');
+		console.log('1');
 
-		favMovies.on('value', snapshot =>
+		feedbacks.on('value', snapshot =>
 			snapshot.forEach(data => {
-				if (data.val().id === credentials) {
+				console.log('2');
+				if (data.val().teammate.tmId === teammate.tmId) {
+					console.log('3');
 					firebase
 						.database()
-						.ref('users/' + userId + '/favorites/' + data.key)
-						.remove();
+						.ref('users/' + userId + '/feedbacks/' + data.key)
+						.update({ ratings, resolution });
 				}
 			}),
 		);
+		dispatch(feedbackActions.updateFeedbackSuccess());
 	} catch (error) {
 		dispatch(feedbackActions.updateFeedbackFailure(error));
 	}

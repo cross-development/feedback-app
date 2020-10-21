@@ -12,6 +12,7 @@ export const StyledFilterLabel = styled.label`
 	align-items: flex-start;
 	color: #a7a9ab;
 	text-transform: uppercase;
+	position: relative;
 `;
 
 export const StyledFilterInput = styled.input`
@@ -20,7 +21,7 @@ export const StyledFilterInput = styled.input`
 	padding: 4px 0;
 	border: none;
 	background-color: transparent;
-	border-bottom: 2px solid #616161;
+	border-bottom: 2px solid ${({ value }) => (value ? '#EC1940' : '#616161')};
 	width: 100%;
 	display: block;
 	outline: 0;
@@ -70,4 +71,17 @@ export const StyledFilterInput = styled.input`
 		opacity: 0;
 		transition: opacity 0.3s ease;
 	}
+`;
+
+export const StyledClearButton = styled.button`
+	width: 16px;
+	height: 16px;
+	border-radius: 50px;
+	background-color: #7a7e81;
+	border: none;
+	position: absolute;
+	bottom: 6px;
+	right: 4px;
+	outline: none;
+	cursor: pointer;
 `;

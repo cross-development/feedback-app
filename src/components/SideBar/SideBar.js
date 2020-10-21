@@ -20,6 +20,8 @@ const SideBar = ({ existUser, teammatesLoading, feedbacksLoading }) => {
 
 	const handleChangeFilter = filter => setFilter(filter);
 
+	const handleClearFilter = () => setFilter('');
+
 	return (
 		<StyledAside>
 			<Logo />
@@ -28,7 +30,11 @@ const SideBar = ({ existUser, teammatesLoading, feedbacksLoading }) => {
 				<>
 					<UserMenu uid={existUser.uid} name={existUser.displayName} />
 
-					<TeamFilter value={filter} onChangeFilter={handleChangeFilter} />
+					<TeamFilter
+						value={filter}
+						onClearFilter={handleClearFilter}
+						onChangeFilter={handleChangeFilter}
+					/>
 
 					{teammatesLoading || feedbacksLoading ? (
 						<Loader onLoad={teammatesLoading} size={20} />
