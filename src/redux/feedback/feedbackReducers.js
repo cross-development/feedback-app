@@ -3,11 +3,12 @@ import { combineReducers } from 'redux';
 import { createReducer } from '@reduxjs/toolkit';
 //Redux
 import feedbackActions from './feedbackActions';
+import authActions from 'redux/auth/authActions';
 
 //Feedback reducer
 const items = createReducer([], {
-	// [feedbackActions.updateFeedbackSuccess]: (state, { payload }) => ({ ...state, payload }),
 	[feedbackActions.getFeedbackSuccess]: (state, { payload }) => payload,
+	[authActions.logoutSuccess]: () => [],
 });
 
 //Loading reducer

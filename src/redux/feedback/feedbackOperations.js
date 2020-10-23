@@ -1,4 +1,5 @@
 //Database
+import { current } from '@reduxjs/toolkit';
 import firebase from 'firebase';
 //Redux
 import feedbackActions from './feedbackActions';
@@ -22,13 +23,10 @@ const updateFeedback = (userId, credentials) => async dispatch => {
 	try {
 		const { teammate, ratings, resolution } = credentials;
 		const feedbacks = firebase.database().ref('users/' + userId + '/feedbacks');
-		console.log('1');
 
-		feedbacks.on('value', snapshot =>
+		feedbacks.once('value', snapshot =>
 			snapshot.forEach(data => {
-				console.log('2');
 				if (data.val().teammate.tmId === teammate.tmId) {
-					console.log('3');
 					firebase
 						.database()
 						.ref('users/' + userId + '/feedbacks/' + data.key)
@@ -36,6 +34,7 @@ const updateFeedback = (userId, credentials) => async dispatch => {
 				}
 			}),
 		);
+
 		dispatch(feedbackActions.updateFeedbackSuccess());
 	} catch (error) {
 		dispatch(feedbackActions.updateFeedbackFailure(error));

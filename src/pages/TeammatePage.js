@@ -51,15 +51,17 @@ const TeammatePage = ({ existUser, teammates, feedbacks, onAddFeedback, onUpdate
 
 		if (!currentFeedback) {
 			setFeedback(null);
+			setIsReviewed(false);
 			setRatings(ratingsState);
 			setResolution(resolutionState);
 			return;
 		}
 
 		const { ratings, resolution } = currentFeedback;
+
 		setFeedback({ ratings, resolution });
-		setIsReviewed(true); //here
-		setIsUpdated(false); //here
+		setIsReviewed(true);
+		setIsUpdated(false);
 	}, [feedbacks, ratingsState, resolutionState, teammateId]);
 
 	const handleChangeRatings = value => setRatings(value);
@@ -75,31 +77,24 @@ const TeammatePage = ({ existUser, teammates, feedbacks, onAddFeedback, onUpdate
 		};
 
 		if (isReviewed) {
-			setFeedback(null); //here
-			setIsUpdated(true); //here
-			setIsReviewed(false); //here
-			setRatings(ratingsState); //here
-			setResolution(resolutionState); //here
+			setFeedback(null);
+			setIsUpdated(true);
+			setIsReviewed(false);
+			setRatings(ratingsState);
+			setResolution(resolutionState);
 			return;
 		}
 
-		if (isUpdated) {
-			onUpdateFeedback(existUser.uid, teammateFeedback); //here
-			setIsUpdated(true); //here
-		} else {
-			onAddFeedback(existUser.uid, teammateFeedback); //here
-			setIsReviewed(false); //here
-		}
+		isUpdated
+			? onUpdateFeedback(existUser.uid, teammateFeedback)
+			: onAddFeedback(existUser.uid, teammateFeedback);
 
-		// isUpdated
-		// 	? onUpdateFeedback(existUser.uid, teammateFeedback)
-		// 	: onAddFeedback(existUser.uid, teammateFeedback);
-		setResolution(resolutionState); //here
-		setRatings(ratingsState); //here
-		// setIsReviewed(true);
-		// setIsUpdated(false);
+		setResolution(resolutionState);
+		setRatings(ratingsState);
+		setIsReviewed(false);
+		setIsUpdated(true);
 
-		history.replace('/'); //here
+		history.replace('/');
 	};
 
 	const feedbackRatings = feedback ? feedback.ratings : ratings;

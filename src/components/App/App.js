@@ -24,9 +24,8 @@ class App extends Component {
 
 	async componentDidUpdate(prevProps, prevState) {
 		if (prevProps.existUser !== this.props.existUser) {
-			await this.props.onGetTeammates();
-
 			if (this.props.existUser) {
+				await this.props.onGetTeammates();
 				await this.props.onGetFeedbacks(this.props.existUser.uid);
 			}
 		}

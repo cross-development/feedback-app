@@ -33,6 +33,7 @@ const Teammate = ({
 
 					<StyledLabel>
 						<StyledInput
+							required
 							type="text"
 							name="wrong"
 							autoComplete="off"
@@ -45,6 +46,7 @@ const Teammate = ({
 
 					<StyledLabel>
 						<StyledInput
+							required
 							type="text"
 							name="improve"
 							autoComplete="off"

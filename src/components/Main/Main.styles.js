@@ -33,4 +33,6 @@ export const StyledTitleH1 = styled.h1`
 export const StyledTextP = styled.p`
 	font-size: 28px;
 	font-weight: 300;
+	margin-left: 0;
+	margin-right: auto;
 `;
