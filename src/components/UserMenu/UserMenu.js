@@ -5,14 +5,9 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { authOperations } from 'redux/auth';
 //Styles
-import {
-	StyledUserWrapDiv,
-	StyledAvatarWrapDiv,
-	StyledAvatarIMG,
-	StyledNameLink,
-	StyledNameWrapDiv,
-	StyledLogoutLink,
-} from './UserMenu.styles';
+import { StyledLogOutIcon } from './UserMenu.styles';
+import { StyledNameLink, StyledNameWrapDiv, StyledLogoutLink } from './UserMenu.styles';
+import { StyledUserWrapDiv, StyledAvatarWrapDiv, StyledAvatarIMG } from './UserMenu.styles';
 
 const UserMenu = ({ uid, avatar, name, onLogout }) => (
 	<StyledUserWrapDiv>
@@ -24,7 +19,7 @@ const UserMenu = ({ uid, avatar, name, onLogout }) => (
 			<StyledNameLink to={`/users/${uid}`}>{name}</StyledNameLink>
 
 			<StyledLogoutLink to="/" onClick={onLogout}>
-				Log out
+				Log out <StyledLogOutIcon />
 			</StyledLogoutLink>
 		</StyledNameWrapDiv>
 	</StyledUserWrapDiv>

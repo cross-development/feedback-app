@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
+import { FaSignOutAlt } from 'react-icons/fa';
 
 export const StyledUserWrapDiv = styled.div`
 	display: flex;
@@ -43,4 +44,10 @@ export const StyledLogoutLink = styled(Link)`
 	line-height: 14px;
 	font-weight: 400;
 	text-decoration: none;
+	display: flex;
+	align-items: center;
+`;
+
+export const StyledLogOutIcon = styled(FaSignOutAlt)`
+	margin-left: 0.5rem;
 `;

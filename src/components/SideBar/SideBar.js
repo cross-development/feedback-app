@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 //Components
 import Logo from '../Logo';
 import Loader from '../Loader';
+import AuthMenu from '../AuthMenu';
 import UserMenu from '../UserMenu';
 import TeamFilter from '../TeamFilter';
 import TeammateList from '../TeammateList';
@@ -15,7 +16,7 @@ import { feedbackSelectors } from 'redux/feedback';
 //Styles
 import { StyledAside } from './SideBar.styles';
 
-const SideBar = ({ existUser, teammatesLoading, feedbacksLoading }) => {
+const SideBar = ({ existUser, userLoading, teammatesLoading, feedbacksLoading }) => {
 	const [filter, setFilter] = useState('');
 
 	const handleChangeFilter = filter => setFilter(filter);
@@ -26,7 +27,7 @@ const SideBar = ({ existUser, teammatesLoading, feedbacksLoading }) => {
 		<StyledAside>
 			<Logo />
 
-			{existUser && (
+			{existUser ? (
 				<>
 					<UserMenu uid={existUser.uid} name={existUser.displayName} />
 
@@ -42,6 +43,8 @@ const SideBar = ({ existUser, teammatesLoading, feedbacksLoading }) => {
 						<TeammateList filter={filter} />
 					)}
 				</>
+			) : (
+				existUser || (userLoading && <AuthMenu />)
 			)}
 		</StyledAside>
 	);
@@ -59,6 +62,7 @@ SideBar.defaultProps = {
 
 const mapStateToProps = state => ({
 	existUser: authSelectors.existUser(state),
+	userLoading: authSelectors.getLoading(state),
 	feedbacksLoading: feedbackSelectors.getLoading(state),
 	teammatesLoading: teammateSelectors.getLoading(state),
 });

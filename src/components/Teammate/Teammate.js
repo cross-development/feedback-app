@@ -9,7 +9,7 @@ import { StyledRatingForm, StyledTitleH2, StyledButton, StyledWrapperDiv } from 
 import { StyledLabel, StyledInput, StyledContainerDiv, StyledSubtitleH3 } from './Teammate.styles';
 
 const Teammate = ({
-	member,
+	teammate,
 	onSubmit,
 	isReviewed,
 	ratingsState,
@@ -19,7 +19,7 @@ const Teammate = ({
 }) => {
 	return (
 		<StyledContainerDiv>
-			<TeammateCard member={member} />
+			<TeammateCard teammate={teammate} />
 
 			<StyledRatingForm onSubmit={onSubmit}>
 				<StyledTitleH2>Provide feedback</StyledTitleH2>
@@ -65,7 +65,7 @@ const Teammate = ({
 };
 
 Teammate.propTypes = {
-	member: PropTypes.shape({
+	teammate: PropTypes.shape({
 		tmName: PropTypes.string.isRequired,
 		tmAvatar: PropTypes.string.isRequired,
 		tmOccupation: PropTypes.string.isRequired,

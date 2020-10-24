@@ -13,6 +13,10 @@ const getFeedbackRequest = createAction('feedbacks/getFeedbackRequest');
 const getFeedbackSuccess = createAction('feedbacks/getFeedbackSuccess');
 const getFeedbackFailure = createAction('feedbacks/getFeedbackFailure');
 
+const clearFeedbacksRequest = createAction('feedbacks/clearFeedbacksRequest');
+const clearFeedbacksSuccess = createAction('feedbacks/clearFeedbacksSuccess');
+const clearFeedbacksFailure = createAction('feedbacks/clearFeedbacksFailure');
+
 export default {
 	addFeedbackRequest,
 	addFeedbackSuccess,
@@ -25,4 +29,8 @@ export default {
 	getFeedbackRequest,
 	getFeedbackSuccess,
 	getFeedbackFailure,
+
+	clearFeedbacksRequest,
+	clearFeedbacksSuccess,
+	clearFeedbacksFailure,
 };

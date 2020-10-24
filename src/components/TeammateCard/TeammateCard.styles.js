@@ -1,4 +1,7 @@
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
+import Rating from '@material-ui/lab/Rating';
+import { withStyles } from '@material-ui/core/styles';
 
 export const StyledContainerDiv = styled.div`
 	display: flex;
@@ -39,3 +42,17 @@ export const StyledAvatarIMG = styled.img`
 	display: block;
 	margin-right: 1rem;
 `;
+
+export const StyledEsc = styled(Link)`
+	text-decoration: none;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	color: #4e5357;
+`;
+
+export const StyledRatingStar = withStyles({
+	iconFilled: { color: '#ff3d47' },
+	iconHover: { color: '#EC1940' },
+})(Rating);

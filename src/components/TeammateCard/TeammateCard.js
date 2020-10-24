@@ -1,14 +1,13 @@
 //Core
 import React from 'react';
 import PropTypes from 'prop-types';
-//Components
-// import Rating from '@material-ui/lab/Rating';
 //Styles
-import { StyledNameP, StyledAvatarIMG, StyledWrapperDiv } from './TeammateCard.styles';
+import { StyledRatingStar } from './TeammateCard.styles';
+import { StyledNameP, StyledAvatarIMG, StyledWrapperDiv, StyledEsc } from './TeammateCard.styles';
 import { StyledAvatarWrap, StyledOccupationP, StyledContainerDiv } from './TeammateCard.styles';
 
-const TeammateCard = ({ score, member }) => {
-	const { tmName, tmAvatar, tmOccupation } = member;
+const TeammateCard = ({ teammate }) => {
+	const { tmName, tmAvatar, tmOccupation } = teammate;
 
 	return (
 		<StyledContainerDiv>
@@ -25,26 +24,22 @@ const TeammateCard = ({ score, member }) => {
 				<p>Average score</p>
 				<div>
 					<span>4.2</span>
-					<Rating
-							name="score"
-							value={score}
-							onChange={(event, newValue) => {
-								handleRatings({ ...state, [`${label}`]: newValue });
-							}}
-						/>
+					<StyledRatingStar name="score" value={4} readOnly />
 				</div>
 			</StyledWrapperDiv> */}
 
 			<StyledWrapperDiv>
-				<span>&times;</span>
-				<p>ESC</p>
+				<StyledEsc to="/">
+					<span>&times;</span>
+					<p>ESC</p>
+				</StyledEsc>
 			</StyledWrapperDiv>
 		</StyledContainerDiv>
 	);
 };
 
 TeammateCard.propTypes = {
-	member: PropTypes.shape({
+	teammate: PropTypes.shape({
 		tmName: PropTypes.string.isRequired,
 		tmAvatar: PropTypes.string.isRequired,
 		tmOccupation: PropTypes.string.isRequired,

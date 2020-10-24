@@ -1,4 +1,6 @@
 import styled from 'styled-components';
+import Rating from '@material-ui/lab/Rating';
+import { withStyles } from '@material-ui/core/styles';
 
 export const StyledRatingUl = styled.ul`
 	list-style: none;
@@ -16,3 +18,8 @@ export const StyledRatingLi = styled.li`
 		margin-bottom: 0.5rem;
 	}
 `;
+
+export const StyledRatingStar = withStyles({
+	iconFilled: { color: '#ff3d47' },
+	iconHover: { color: '#EC1940' },
+})(Rating);

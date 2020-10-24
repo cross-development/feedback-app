@@ -103,7 +103,7 @@ const TeammatePage = ({ existUser, teammates, feedbacks, onAddFeedback, onUpdate
 	return (
 		teammate && (
 			<Teammate
-				member={teammate}
+				teammate={teammate}
 				isReviewed={isReviewed}
 				ratingsState={feedbackRatings}
 				resolutionState={feedbackResolutions}

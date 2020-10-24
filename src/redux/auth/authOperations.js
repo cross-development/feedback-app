@@ -2,6 +2,8 @@
 import firebase from 'firebase';
 //Redux
 import authActions from './authActions';
+import feedbackActions from 'redux/feedback/feedbackActions';
+import teammateActions from 'redux/teammate/teammateActions';
 
 const register = (name, email, password) => async dispatch => {
 	dispatch(authActions.registerRequest());
@@ -43,7 +45,11 @@ const logout = () => async dispatch => {
 		await firebase
 			.auth()
 			.signOut()
-			.then(() => dispatch(authActions.logoutSuccess()));
+			.then(() => {
+				dispatch(authActions.logoutSuccess());
+				dispatch(feedbackActions.clearFeedbacksSuccess());
+				dispatch(teammateActions.clearTeammatesSuccess());
+			});
 	} catch (error) {
 		dispatch(authActions.logoutFailure(error));
 	}

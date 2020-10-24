@@ -9,6 +9,10 @@ const getTeammatesRequest = createAction('teammates/getTeammatesRequest');
 const getTeammatesSuccess = createAction('teammates/getTeammatesSuccess');
 const getTeammatesFailure = createAction('teammates/getTeammatesFailure');
 
+const clearTeammatesRequest = createAction('teammates/clearTeammatesRequest');
+const clearTeammatesSuccess = createAction('teammates/clearTeammatesSuccess');
+const clearTeammatesFailure = createAction('teammates/clearTeammatesFailure');
+
 export default {
 	onAddTeammateRequest,
 	onAddTeammateSuccess,
@@ -17,4 +21,8 @@ export default {
 	getTeammatesRequest,
 	getTeammatesSuccess,
 	getTeammatesFailure,
+
+	clearTeammatesRequest,
+	clearTeammatesSuccess,
+	clearTeammatesFailure,
 };

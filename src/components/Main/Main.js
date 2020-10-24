@@ -10,16 +10,16 @@ import { teammateSelectors } from 'redux/teammate';
 //Styles
 import { StyledSubLogoDiv, StyledWrapperDiv, StyledTitleH1, StyledTextP } from './Main.styles';
 
-const Main = ({ teammates, feedbacks }) => {
+const Main = ({ teammates, feedbacks, teammatesLoading, feedbacksLoading }) => {
 	const isReviewed = teammates.length === feedbacks.length;
-	const isFeedbackAndTeammateNotEmpty = feedbacks.length > 0 && teammates.length > 0;
-	const isFeedbackAndTeammateAreEmpty = feedbacks.length < 1 || teammates.length < 1;
+	const isFeedbacksAndTeammatesNotEmpty = feedbacks.length > 0 && teammates.length > 0;
+	const isFeedbacksAndTeammatesAreEmpty = feedbacks.length < 1 || teammates.length < 1;
 
 	return (
 		<>
-			{teammates.length < 1 ? (
-				<Loader onLoad={true} />
-			) : (
+			{isFeedbacksAndTeammatesAreEmpty && <Loader onLoad={true && teammates.length < 1} />}
+
+			{feedbacks.length < 1 && teammates.length > 0 && !feedbacksLoading && (
 				<StyledWrapperDiv>
 					<StyledSubLogoDiv />
 					<StyledTitleH1>No teammate selected</StyledTitleH1>
@@ -30,15 +30,15 @@ const Main = ({ teammates, feedbacks }) => {
 				</StyledWrapperDiv>
 			)}
 
-			{/* {isFeedbackAndTeammateNotEmpty && (
-				<>
+			{isFeedbacksAndTeammatesNotEmpty && (
+				<StyledWrapperDiv>
 					<StyledSubLogoDiv />
 					<StyledTitleH1>Your feedback accepted</StyledTitleH1>
 					<StyledTextP>You can review other your teammates</StyledTextP>
-				</>
-			)} */}
+				</StyledWrapperDiv>
+			)}
 
-			{isReviewed && isFeedbackAndTeammateNotEmpty && (
+			{isReviewed && isFeedbacksAndTeammatesNotEmpty && (
 				<StyledWrapperDiv>
 					<StyledSubLogoDiv />
 					<StyledTitleH1>You reviewed all your team</StyledTitleH1>
@@ -52,6 +52,8 @@ const Main = ({ teammates, feedbacks }) => {
 const mapStateToProps = state => ({
 	teammates: teammateSelectors.getTeammates(state),
 	feedbacks: feedbackSelectors.getFeedbacks(state),
+	teammatesLoading: teammateSelectors.getLoading(state),
+	feedbacksLoading: feedbackSelectors.getLoading(state),
 });
 
 export default connect(mapStateToProps)(Main);
