@@ -2,7 +2,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 //Styles
-import { StyledRatingStar } from './TeammateCard.styles';
+// import { StyledRatingStar } from './TeammateCard.styles';
 import { StyledNameP, StyledAvatarIMG, StyledWrapperDiv, StyledEsc } from './TeammateCard.styles';
 import { StyledAvatarWrap, StyledOccupationP, StyledContainerDiv } from './TeammateCard.styles';
 
