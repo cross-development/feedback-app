@@ -27,24 +27,21 @@ const SideBar = () => {
 		<StyledAside>
 			<Logo />
 
-			{uid ? (
-				teammatesLoading || feedbacksLoading ? (
-					<Loader onLoad={teammatesLoading} size={20} />
-				) : (
-					<>
-						{displayName && <UserMenu uid={uid} name={displayName} avatar={photoURL} />}
+			{uid
+				? !teammatesLoading &&
+				  !feedbacksLoading && (
+						<>
+							{displayName && <UserMenu uid={uid} name={displayName} avatar={photoURL} />}
 
-						<TeamFilter
-							value={filter}
-							onClearFilter={handleClearFilter}
-							onChangeFilter={handleChangeFilter}
-						/>
-						<TeammateList filter={filter} />
-					</>
-				)
-			) : (
-				(uid && userLoading) || <AuthMenu />
-			)}
+							<TeamFilter
+								value={filter}
+								onClearFilter={handleClearFilter}
+								onChangeFilter={handleChangeFilter}
+							/>
+							<TeammateList filter={filter} />
+						</>
+				  )
+				: (uid && userLoading) || <AuthMenu />}
 		</StyledAside>
 	);
 };
