@@ -2,12 +2,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 //Styles
-import {
-	StyledFilterWrapDiv,
-	StyledFilterLabel,
-	StyledFilterInput,
-	StyledClearButton,
-} from './TeamFilter.styles';
+import { StyledFilterInput, StyledClearButton } from './TeamFilter.styles';
+import { StyledFilterWrapDiv, StyledFilterLabel } from './TeamFilter.styles';
 
 const TeamFilter = ({ value, onChangeFilter, onClearFilter }) => (
 	<StyledFilterWrapDiv>

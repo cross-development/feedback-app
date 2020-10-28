@@ -1,13 +1,11 @@
 //Core
-import React, { Suspense, useEffect, Component } from 'react';
-import PropTypes from 'prop-types';
-import { Switch } from 'react-router-dom';
-import { BrowserRouter as Router } from 'react-router-dom';
+import React, { Suspense, useEffect } from 'react';
+import { Switch, BrowserRouter as Router } from 'react-router-dom';
 //Redux
-import { connect } from 'react-redux';
+import { authOperations } from 'redux/auth';
 import { teammateOperations } from 'redux/teammate';
 import { feedbackOperations } from 'redux/feedback';
-import { authOperations, authSelectors } from 'redux/auth';
+import { useSelector, useDispatch } from 'react-redux';
 //Components
 import Layout from '../Layout';
 import Loader from '../Loader';
@@ -17,84 +15,40 @@ import routes from 'router';
 import PublicRoute from 'router/PublicRoute';
 import PrivateRoute from 'router/PrivateRoute';
 
-class App extends Component {
-	async componentDidMount() {
-		await this.props.onGetCurrentUser();
-	}
+const App = () => {
+	const { user } = useSelector(state => state.auth);
+	const dispatch = useDispatch();
 
-	async componentDidUpdate(prevProps, prevState) {
-		if (prevProps.existUser !== this.props.existUser) {
-			if (this.props.existUser) {
-				await this.props.onGetTeammates();
-				await this.props.onGetFeedbacks(this.props.existUser.uid);
-			}
+	useEffect(() => {
+		dispatch(authOperations.getCurrentUser());
+	}, [dispatch]);
+
+	useEffect(() => {
+		if (user) {
+			dispatch(teammateOperations.getTeammates());
+			dispatch(feedbackOperations.getFeedbacks(user.uid));
 		}
-	}
+	}, [dispatch, user]);
 
-	render() {
-		return (
-			<Router>
-				<SideBar />
+	return (
+		<Router>
+			<SideBar />
 
-				<Layout>
-					<Suspense fallback={<Loader onLoad={true} />}>
-						<Switch>
-							{routes.map(route =>
-								route.private ? (
-									<PrivateRoute key={route.path} {...route} />
-								) : (
-									<PublicRoute key={route.path} {...route} />
-								),
-							)}
-						</Switch>
-					</Suspense>
-				</Layout>
-			</Router>
-		);
-	}
-}
-
-// const App = ({ onGetCurrentUser, onGetTeammates }) => {
-// 	useEffect(() => {
-// 		onGetCurrentUser();
-// 		onGetTeammates();
-// 	}, [onGetCurrentUser, onGetTeammates]);
-
-// 	return (
-// 		<Router>
-// 			<SideBar />
-
-// 			<Layout>
-// 				<Suspense fallback={<Loader onLoad={true} />}>
-// 					<Switch>
-// 						{routes.map(route =>
-// 							route.private ? (
-// 								<PrivateRoute key={route.path} {...route} />
-// 							) : (
-// 								<PublicRoute key={route.path} {...route} />
-// 							),
-// 						)}
-// 					</Switch>
-// 				</Suspense>
-// 			</Layout>
-// 		</Router>
-// 	);
-// };
-
-// App.propTypes = {
-// 	onGetCurrentUser: PropTypes.func.isRequired,
-// 	onGetTeammates: PropTypes.func.isRequired,
-// };
-
-const mapStateToProps = state => ({
-	existUser: authSelectors.existUser(state),
-	userLoading: authSelectors.getLoading(state),
-});
-
-const mapDispatchToProps = {
-	onGetCurrentUser: authOperations.getCurrentUser,
-	onGetTeammates: teammateOperations.getTeammates,
-	onGetFeedbacks: feedbackOperations.getFeedbacks,
+			<Layout>
+				<Suspense fallback={<Loader onLoad={true} />}>
+					<Switch>
+						{routes.map(route =>
+							route.private ? (
+								<PrivateRoute key={route.path} {...route} />
+							) : (
+								<PublicRoute key={route.path} {...route} />
+							),
+						)}
+					</Switch>
+				</Suspense>
+			</Layout>
+		</Router>
+	);
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(App);
+export default App;

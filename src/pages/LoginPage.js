@@ -1,15 +1,17 @@
 //Core
 import React, { useState } from 'react';
-import PropTypes from 'prop-types';
 //Components
 import Login from 'components/Login';
 //Redux
-import { connect } from 'react-redux';
-import { authOperations, authSelectors } from 'redux/auth';
+import { authOperations } from 'redux/auth';
+import { useSelector, useDispatch } from 'react-redux';
 
-const LoginPage = ({ onLogin, error }) => {
+const LoginPage = () => {
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
+
+	const dispatch = useDispatch();
+	const { error } = useSelector(state => state.auth);
 
 	const handleChangeEmail = ({ target: { value } }) => setEmail(value);
 	const handleChangePassword = ({ target: { value } }) => setPassword(value);
@@ -17,7 +19,7 @@ const LoginPage = ({ onLogin, error }) => {
 	const handleSubmit = e => {
 		e.preventDefault();
 
-		onLogin(email, password);
+		dispatch(authOperations.login(email, password));
 
 		setPassword('');
 		setEmail('');
@@ -36,21 +38,4 @@ const LoginPage = ({ onLogin, error }) => {
 	);
 };
 
-LoginPage.propTypes = {
-	onLogin: PropTypes.func.isRequired,
-	error: PropTypes.object,
-};
-
-LoginPage.defaultProps = {
-	error: null,
-};
-
-const mapStateToProps = state => ({
-	error: authSelectors.getError(state),
-});
-
-const mapDispatchToProps = {
-	onLogin: authOperations.login,
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(LoginPage);
+export default LoginPage;

@@ -1,6 +1,5 @@
 //Core
 import React, { useState } from 'react';
-import PropTypes from 'prop-types';
 //Components
 import Logo from '../Logo';
 import Loader from '../Loader';
@@ -9,15 +8,16 @@ import UserMenu from '../UserMenu';
 import TeamFilter from '../TeamFilter';
 import TeammateList from '../TeammateList';
 //Redux
-import { connect } from 'react-redux';
-import { authSelectors } from 'redux/auth';
-import { teammateSelectors } from 'redux/teammate';
-import { feedbackSelectors } from 'redux/feedback';
+import { useSelector } from 'react-redux';
 //Styles
 import { StyledAside } from './SideBar.styles';
 
-const SideBar = ({ existUser, userLoading, teammatesLoading, feedbacksLoading }) => {
+const SideBar = () => {
 	const [filter, setFilter] = useState('');
+
+	const { user, loading: userLoading } = useSelector(state => state.auth);
+	const { loading: teammatesLoading } = useSelector(state => state.teammates);
+	const { loading: feedbacksLoading } = useSelector(state => state.feedbacks);
 
 	const handleChangeFilter = filter => setFilter(filter);
 
@@ -27,9 +27,9 @@ const SideBar = ({ existUser, userLoading, teammatesLoading, feedbacksLoading })
 		<StyledAside>
 			<Logo />
 
-			{existUser ? (
+			{user ? (
 				<>
-					<UserMenu uid={existUser.uid} name={existUser.displayName} />
+					<UserMenu uid={user.uid} name={user.displayName} />
 
 					<TeamFilter
 						value={filter}
@@ -44,27 +44,10 @@ const SideBar = ({ existUser, userLoading, teammatesLoading, feedbacksLoading })
 					)}
 				</>
 			) : (
-				existUser || (userLoading && <AuthMenu />)
+				user || (userLoading && <AuthMenu />)
 			)}
 		</StyledAside>
 	);
 };
 
-SideBar.propTypes = {
-	existUser: PropTypes.objectOf(PropTypes.any),
-	teammatesLoading: PropTypes.bool.isRequired,
-	feedbacksLoading: PropTypes.bool.isRequired,
-};
-
-SideBar.defaultProps = {
-	existUser: null,
-};
-
-const mapStateToProps = state => ({
-	existUser: authSelectors.existUser(state),
-	userLoading: authSelectors.getLoading(state),
-	feedbacksLoading: feedbackSelectors.getLoading(state),
-	teammatesLoading: teammateSelectors.getLoading(state),
-});
-
-export default connect(mapStateToProps)(SideBar);
+export default SideBar;

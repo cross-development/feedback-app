@@ -30,7 +30,9 @@ const UserProfile = ({ user, onSubmit, profileState, handleChangeProfile }) => (
 						placeholder="Enter full name"
 						value={profileState.displayName || ''}
 						inputLength={profileState.displayName}
-						onChange={e => handleChangeProfile({ ...profileState, displayName: e.target.value })}
+						onChange={e =>
+							handleChangeProfile({ ...profileState, [e.target.name]: e.target.value })
+						}
 					/>
 					<StyledPenBtn />
 				</StyledLabel>
@@ -44,7 +46,9 @@ const UserProfile = ({ user, onSubmit, profileState, handleChangeProfile }) => (
 						placeholder="Enter phone number"
 						value={profileState.phoneNumber || ''}
 						inputLength={profileState.phoneNumber}
-						onChange={e => handleChangeProfile({ ...profileState, phoneNumber: e.target.value })}
+						onChange={e =>
+							handleChangeProfile({ ...profileState, [e.target.name]: e.target.value })
+						}
 					/>
 					<StyledPenBtn />
 				</StyledLabel>
@@ -58,7 +62,9 @@ const UserProfile = ({ user, onSubmit, profileState, handleChangeProfile }) => (
 						placeholder="Enter photo URL"
 						value={profileState.photoURL || ''}
 						inputLength={profileState.photoURL}
-						onChange={e => handleChangeProfile({ ...profileState, photoURL: e.target.value })}
+						onChange={e =>
+							handleChangeProfile({ ...profileState, [e.target.name]: e.target.value })
+						}
 					/>
 					<StyledPenBtn />
 				</StyledLabel>

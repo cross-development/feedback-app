@@ -2,12 +2,12 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 //Redux
-import { connect } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { teammateOperations } from 'redux/teammate';
 //Styles
 import { StylesForm, StyledLabel, StyledInput, StyledButton } from './Admin.styles';
 
-const Admin = ({ onAddTeammate }) => {
+const Admin = () => {
 	const initialState = {
 		tmName: '',
 		tmAvatar: '',
@@ -16,10 +16,12 @@ const Admin = ({ onAddTeammate }) => {
 
 	const [state, setState] = useState(initialState);
 
+	const dispatch = useDispatch();
+
 	const handleSubmit = e => {
 		e.preventDefault();
 
-		onAddTeammate(state);
+		dispatch(teammateOperations.addTeammate(state));
 		setState(initialState);
 	};
 	return (
@@ -62,12 +64,4 @@ const Admin = ({ onAddTeammate }) => {
 	);
 };
 
-Admin.propTypes = {
-	onAddTeammate: PropTypes.func.isRequired,
-};
-
-const mapDispatchToProps = {
-	onAddTeammate: teammateOperations.addTeammate,
-};
-
-export default connect(null, mapDispatchToProps)(Admin);
+export default Admin;

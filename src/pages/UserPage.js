@@ -3,16 +3,17 @@ import React, { useState } from 'react';
 //Components
 import UserProfile from 'components/UserProfile';
 //Redux
-import { connect } from 'react-redux';
-import { authSelectors } from 'redux/auth';
+import { useSelector } from 'react-redux';
 
-const UserPage = ({ existUser }) => {
+const UserPage = () => {
+	const { user } = useSelector(state => state.auth);
+
 	const clearInput = '';
 
 	const userProfile = {
-		photoURL: existUser.photoURL,
-		phoneNumber: existUser.phoneNumber,
-		displayName: existUser.displayName,
+		photoURL: user.photoURL,
+		phoneNumber: user.phoneNumber,
+		displayName: user.displayName,
 	};
 
 	const [profileState, setProfileState] = useState(userProfile);
@@ -27,7 +28,7 @@ const UserPage = ({ existUser }) => {
 
 	return (
 		<UserProfile
-			user={existUser}
+			user={user}
 			onSubmit={handleSubmit}
 			profileState={profileState}
 			handleChangeProfile={handleChangeProfile}
@@ -35,10 +36,4 @@ const UserPage = ({ existUser }) => {
 	);
 };
 
-const mapStateToProps = state => ({
-	existUser: authSelectors.existUser(state),
-});
-
-const mapDispatchToProps = {};
-
-export default connect(mapStateToProps, mapDispatchToProps)(UserPage);
+export default UserPage;

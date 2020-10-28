@@ -2,14 +2,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 //Redux
-import { connect } from 'react-redux';
-import { teammateSelectors } from 'redux/teammate';
-import { feedbackSelectors } from 'redux/feedback';
+import { useSelector } from 'react-redux';
 //Styles
 import { StylesTeamUL, StyledTeamLI, StyledTeamLink } from './TeammateList.styles';
 import { StyledNameSpan, StyledAvatarIMG, StyledStatusSpan } from './TeammateList.styles';
 
-const TeammateList = ({ filter, teammates, feedbacks }) => {
+const TeammateList = ({ filter }) => {
+	const { items: teammates } = useSelector(state => state.teammates);
+	const { items: feedbacks } = useSelector(state => state.feedbacks);
+
 	const getVisibleTeammates = teammates =>
 		teammates.filter(({ tmName }) => tmName.toLowerCase().includes(filter.toLowerCase()));
 
@@ -49,14 +50,6 @@ const TeammateList = ({ filter, teammates, feedbacks }) => {
 TeammateList.propTypes = {
 	filter: PropTypes.string,
 	existUser: PropTypes.objectOf(PropTypes.any),
-	teammates: PropTypes.arrayOf(
-		PropTypes.shape({
-			tmId: PropTypes.string.isRequired,
-			tmName: PropTypes.string.isRequired,
-			tmAvatar: PropTypes.string.isRequired,
-			tmOccupation: PropTypes.string.isRequired,
-		}).isRequired,
-	).isRequired,
 };
 
 TeammateList.defaultProps = {
@@ -64,9 +57,4 @@ TeammateList.defaultProps = {
 	existUser: null,
 };
 
-const mapStateToProps = state => ({
-	teammates: teammateSelectors.getTeammates(state),
-	feedbacks: feedbackSelectors.getFeedbacks(state),
-});
-
-export default connect(mapStateToProps)(TeammateList);
+export default TeammateList;

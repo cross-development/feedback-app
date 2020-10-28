@@ -1,16 +1,16 @@
 //Core
 import React from 'react';
-import PropTypes from 'prop-types';
 //Components
 import Loader from 'components/Loader';
 //Redux
-import { connect } from 'react-redux';
-import { feedbackSelectors } from 'redux/feedback';
-import { teammateSelectors } from 'redux/teammate';
+import { useSelector } from 'react-redux';
 //Styles
 import { StyledSubLogoDiv, StyledWrapperDiv, StyledTitleH1, StyledTextP } from './Main.styles';
 
-const Main = ({ teammates, feedbacks, teammatesLoading, feedbacksLoading }) => {
+const Main = () => {
+	const { items: teammates, loading: teammatesLoading } = useSelector(state => state.teammates);
+	const { items: feedbacks, loading: feedbacksLoading } = useSelector(state => state.feedbacks);
+
 	const isReviewed = teammates.length === feedbacks.length;
 	const isFeedbacksAndTeammatesNotEmpty = feedbacks.length > 0 && teammates.length > 0;
 	const isFeedbacksAndTeammatesAreEmpty = feedbacks.length < 1 || teammates.length < 1;
@@ -49,26 +49,4 @@ const Main = ({ teammates, feedbacks, teammatesLoading, feedbacksLoading }) => {
 	);
 };
 
-const mapStateToProps = state => ({
-	teammates: teammateSelectors.getTeammates(state),
-	feedbacks: feedbackSelectors.getFeedbacks(state),
-	teammatesLoading: teammateSelectors.getLoading(state),
-	feedbacksLoading: feedbackSelectors.getLoading(state),
-});
-
-export default connect(mapStateToProps)(Main);
-
-// {isReviewed ? (
-// 	<>
-// 		<StyledTitleH1>You reviewed all your team</StyledTitleH1>
-// 		<StyledTextP>Great job! Now you can only wait for the feedback session.</StyledTextP>
-// 	</>
-// ) : (
-// 	<>
-// 		<StyledTitleH1>No teammate selected</StyledTitleH1>
-// 		<StyledTextP>
-// 			To provide a feedback you should select an employee from the teammates list or to search
-// 			by a name using the search field.
-// 		</StyledTextP>
-// 	</>
-// )}
+export default Main;

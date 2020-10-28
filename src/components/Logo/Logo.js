@@ -1,12 +1,8 @@
 //Core
 import React from 'react';
 //Styles
-import {
-	StyledLogoWrapperLink,
-	StyledIconWrapperDiv,
-	StyledLogoIconP,
-	StyledLogoH2,
-} from './Logo.styles';
+import { StyledLogoIconP, StyledLogoH2 } from './Logo.styles';
+import { StyledLogoWrapperLink, StyledIconWrapperDiv } from './Logo.styles';
 
 const Logo = () => {
 	return (

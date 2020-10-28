@@ -1,16 +1,18 @@
 //Core
 import React, { useState } from 'react';
-import PropTypes from 'prop-types';
 //Components
 import Register from 'components/Register';
 //Redux
-import { connect } from 'react-redux';
-import { authOperations, authSelectors } from 'redux/auth';
+import { authOperations } from 'redux/auth';
+import { useDispatch, useSelector } from 'react-redux';
 
-const RegisterPage = ({ onRegister, error }) => {
+const RegisterPage = () => {
 	const [email, setEmail] = useState('');
 	const [fullName, setFullName] = useState('');
 	const [password, setPassword] = useState('');
+
+	const dispatch = useDispatch();
+	const { error } = useSelector(state => state.auth);
 
 	const handleChangeEmail = ({ target: { value } }) => setEmail(value);
 	const handleChangeName = ({ target: { value } }) => setFullName(value);
@@ -19,7 +21,7 @@ const RegisterPage = ({ onRegister, error }) => {
 	const handleSubmit = e => {
 		e.preventDefault();
 
-		onRegister(fullName, email, password);
+		dispatch(authOperations.register(fullName, email, password));
 
 		setFullName('');
 		setPassword('');
@@ -41,21 +43,4 @@ const RegisterPage = ({ onRegister, error }) => {
 	);
 };
 
-RegisterPage.propTypes = {
-	onRegister: PropTypes.func.isRequired,
-	error: PropTypes.object,
-};
-
-RegisterPage.defaultProps = {
-	error: null,
-};
-
-const mapStateToProps = state => ({
-	error: authSelectors.getError(state),
-});
-
-const mapDispatchToProps = {
-	onRegister: authOperations.register,
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(RegisterPage);
+export default RegisterPage;
