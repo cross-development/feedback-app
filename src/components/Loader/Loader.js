@@ -10,7 +10,7 @@ import { css } from '@emotion/core';
 //Custom css
 const beatCss = css`
 	display: block;
-	margin: 20% auto;
+	margin: calc(100vh * 0.4) auto;
 `;
 
 const Loader = ({ onLoad, size }) => (

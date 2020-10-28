@@ -5,7 +5,14 @@ import { authSlice } from './authReducers';
 import { feedbackSlice } from 'redux/feedback/feedbackReducers';
 import { teammateSlice } from 'redux/teammate/teammateReducers';
 
-const { updateProfile, setAuthLoading, setAuthError, authSignOut } = authSlice.actions;
+const {
+	authSignOut,
+	setAuthError,
+	updateProfile,
+	setUserProfile,
+	setAuthLoading,
+} = authSlice.actions;
+
 const { clearAllFeedbacks } = feedbackSlice.actions;
 const { clearAllTeammates } = teammateSlice.actions;
 
@@ -18,9 +25,9 @@ export const register = (fullName, email, password) => async dispatch => {
 		const user = await firebase.auth().currentUser;
 		await user.updateProfile({ displayName: fullName });
 
-		const { uid, displayName, photoURL } = await firebase.auth().currentUser;
+		const { uid, displayName } = await firebase.auth().currentUser;
 
-		dispatch(updateProfile({ uid, displayName, photoURL }));
+		dispatch(setUserProfile({ uid, displayName }));
 		dispatch(setAuthLoading(false));
 	} catch (error) {
 		dispatch(setAuthError(error));

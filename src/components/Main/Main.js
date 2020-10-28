@@ -8,7 +8,7 @@ import { useSelector } from 'react-redux';
 import { StyledSubLogoDiv, StyledWrapperDiv, StyledTitleH1, StyledTextP } from './Main.styles';
 
 const Main = () => {
-	const { items: teammates, loading: teammatesLoading } = useSelector(state => state.teammates);
+	const { items: teammates } = useSelector(state => state.teammates);
 	const { items: feedbacks, loading: feedbacksLoading } = useSelector(state => state.feedbacks);
 
 	const isReviewed = teammates.length === feedbacks.length;

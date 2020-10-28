@@ -12,9 +12,9 @@ const HomePage = () => {
 
 	return (
 		<>
-			{uid && <Main />}
+			{uid && userLoading && <Loader onLoad={userLoading} />}
 
-			{!uid || userLoading ? <Home /> : <Loader onLoad={userLoading} />}
+			{!uid || userLoading ? <Home /> : <Main />}
 		</>
 	);
 };

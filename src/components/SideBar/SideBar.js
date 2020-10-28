@@ -28,21 +28,20 @@ const SideBar = () => {
 			<Logo />
 
 			{uid ? (
-				<>
-					<UserMenu uid={uid} name={displayName} avatar={photoURL} />
+				teammatesLoading || feedbacksLoading ? (
+					<Loader onLoad={teammatesLoading} size={20} />
+				) : (
+					<>
+						{displayName && <UserMenu uid={uid} name={displayName} avatar={photoURL} />}
 
-					<TeamFilter
-						value={filter}
-						onClearFilter={handleClearFilter}
-						onChangeFilter={handleChangeFilter}
-					/>
-
-					{teammatesLoading || feedbacksLoading ? (
-						<Loader onLoad={teammatesLoading} size={20} />
-					) : (
+						<TeamFilter
+							value={filter}
+							onClearFilter={handleClearFilter}
+							onChangeFilter={handleChangeFilter}
+						/>
 						<TeammateList filter={filter} />
-					)}
-				</>
+					</>
+				)
 			) : (
 				(uid && userLoading) || <AuthMenu />
 			)}
