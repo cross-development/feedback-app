@@ -3,7 +3,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 //Redux
 import { useDispatch } from 'react-redux';
-import { authOperations } from 'redux/auth';
+import { logout } from 'redux/auth/authOperations';
 //Styles
 import { StyledLogOutIcon } from './UserMenu.styles';
 import { StyledNameLink, StyledNameWrapDiv, StyledLogoutLink } from './UserMenu.styles';
@@ -23,7 +23,7 @@ const UserMenu = ({ uid, avatar, name }) => {
 			<StyledNameWrapDiv>
 				<StyledNameLink to={`/users/${uid}`}>{name}</StyledNameLink>
 
-				<StyledLogoutLink to="/" onClick={() => dispatch(authOperations.logout())}>
+				<StyledLogoutLink to="/" onClick={() => dispatch(logout())}>
 					Log out <StyledLogOutIcon />
 				</StyledLogoutLink>
 			</StyledNameWrapDiv>

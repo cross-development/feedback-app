@@ -1,23 +1,26 @@
 //Database
 import firebase from 'firebase';
 //Redux
-import feedbackActions from './feedbackActions';
+import { feedbackSlice } from './feedbackReducers';
 
-const addFeedback = (userId, credentials) => dispatch => {
-	dispatch(feedbackActions.addFeedbackRequest());
+const { getAllFeedbacks, setFeedbacksLoading, setFeedbacksError } = feedbackSlice.actions;
+
+export const addFeedback = (userId, credentials) => dispatch => {
+	dispatch(setFeedbacksLoading(true));
 
 	try {
 		const userFeedbacks = firebase.database().ref('users/' + userId);
 		userFeedbacks.child('feedbacks').push(credentials);
 
-		dispatch(feedbackActions.addFeedbackSuccess());
+		dispatch(setFeedbacksLoading(false));
 	} catch (error) {
-		dispatch(feedbackActions.addFeedbackFailure(error));
+		dispatch(setFeedbacksError(error));
+		dispatch(setFeedbacksLoading(false));
 	}
 };
 
-const updateFeedback = (userId, credentials) => async dispatch => {
-	dispatch(feedbackActions.updateFeedbackRequest());
+export const updateFeedback = (userId, credentials) => async dispatch => {
+	dispatch(setFeedbacksLoading(true));
 
 	try {
 		const { teammate, ratings, resolution } = credentials;
@@ -34,14 +37,15 @@ const updateFeedback = (userId, credentials) => async dispatch => {
 			}),
 		);
 
-		dispatch(feedbackActions.updateFeedbackSuccess());
+		dispatch(setFeedbacksLoading(false));
 	} catch (error) {
-		dispatch(feedbackActions.updateFeedbackFailure(error));
+		dispatch(setFeedbacksError(error));
+		dispatch(setFeedbacksLoading(false));
 	}
 };
 
-const getFeedbacks = userId => dispatch => {
-	dispatch(feedbackActions.getFeedbackRequest());
+export const getFeedbacks = userId => dispatch => {
+	dispatch(setFeedbacksLoading(true));
 
 	try {
 		const feedbacks = firebase.database().ref('users/' + userId + '/feedbacks');
@@ -50,7 +54,9 @@ const getFeedbacks = userId => dispatch => {
 			let feedbacksData = [];
 
 			if (!snapshot.val()) {
-				return dispatch(feedbackActions.getFeedbackSuccess(feedbacksData));
+				dispatch(getAllFeedbacks(feedbacksData));
+				dispatch(setFeedbacksLoading(false));
+				return;
 			}
 
 			feedbacksData = Object.keys(snapshot.val()).reduce((acc, key) => {
@@ -58,15 +64,11 @@ const getFeedbacks = userId => dispatch => {
 				return acc;
 			}, []);
 
-			dispatch(feedbackActions.getFeedbackSuccess(feedbacksData));
+			dispatch(getAllFeedbacks(feedbacksData));
+			dispatch(setFeedbacksLoading(false));
 		});
 	} catch (error) {
-		dispatch(feedbackActions.getFeedbackFailure(error));
+		dispatch(setFeedbacksError(error));
+		dispatch(setFeedbacksLoading(false));
 	}
-};
-
-export default {
-	addFeedback,
-	updateFeedback,
-	getFeedbacks,
 };

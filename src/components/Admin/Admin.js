@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 //Redux
 import { useDispatch } from 'react-redux';
-import { teammateOperations } from 'redux/teammate';
+import { addTeammate } from 'redux/teammate/teammateOperations';
 //Styles
 import { StylesForm, StyledLabel, StyledInput, StyledButton } from './Admin.styles';
 
@@ -20,7 +20,7 @@ const Admin = () => {
 	const handleSubmit = e => {
 		e.preventDefault();
 
-		dispatch(teammateOperations.addTeammate(state));
+		dispatch(addTeammate(state));
 		setState(initialState);
 	};
 	return (

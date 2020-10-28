@@ -1,46 +1,37 @@
 //Core
-import { combineReducers } from 'redux';
-import { createReducer } from '@reduxjs/toolkit';
-//Redux
-import authActions from './authActions';
+import { createSlice } from '@reduxjs/toolkit';
 
-//User reducer
-const user = createReducer(null, {
-	[authActions.getCurrentUserSuccess]: (state, { payload }) => payload,
-	[authActions.registerSuccess]: (state, { payload }) => payload.user,
-	[authActions.loginSuccess]: (state, { payload }) => payload.user,
-	[authActions.logoutSuccess]: () => null,
-});
+const state = {
+	uid: null,
+	displayName: '',
+	photoURL: null,
+	error: null,
+	loading: false,
+};
 
-//Error reducer
-const error = createReducer(null, {
-	[authActions.getCurrentUserFailure]: (state, { payload }) => payload,
-	[authActions.registerFailure]: (state, { payload }) => payload,
-	[authActions.logoutFailure]: (state, { payload }) => payload,
-	[authActions.loginFailure]: (state, { payload }) => payload,
-});
+export const authSlice = createSlice({
+	name: 'auth',
 
-//Loading reducer
-const loading = createReducer(false, {
-	[authActions.loginRequest]: () => true,
-	[authActions.loginSuccess]: () => false,
-	[authActions.loginFailure]: () => false,
+	initialState: state,
 
-	[authActions.logoutRequest]: () => true,
-	[authActions.logoutSuccess]: () => false,
-	[authActions.logoutFailure]: () => false,
+	reducers: {
+		updateProfile: (state, { payload }) => ({
+			...state,
+			uid: payload.uid,
+			photoURL: payload.photoURL,
+			displayName: payload.displayName,
+		}),
 
-	[authActions.registerRequest]: () => true,
-	[authActions.registerSuccess]: () => false,
-	[authActions.registerFailure]: () => false,
+		setAuthLoading: (state, { payload }) => ({
+			...state,
+			loading: payload,
+		}),
 
-	[authActions.getCurrentUserRequest]: () => true,
-	[authActions.getCurrentUserSuccess]: () => false,
-	[authActions.getCurrentUserFailure]: () => false,
-});
+		setAuthError: (state, { payload }) => ({
+			...state,
+			error: payload,
+		}),
 
-export default combineReducers({
-	user,
-	error,
-	loading,
+		authSignOut: () => state,
+	},
 });

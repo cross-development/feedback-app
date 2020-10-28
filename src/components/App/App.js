@@ -2,10 +2,10 @@
 import React, { Suspense, useEffect } from 'react';
 import { Switch, BrowserRouter as Router } from 'react-router-dom';
 //Redux
-import { authOperations } from 'redux/auth';
-import { teammateOperations } from 'redux/teammate';
-import { feedbackOperations } from 'redux/feedback';
 import { useSelector, useDispatch } from 'react-redux';
+import { getCurrentUser } from 'redux/auth/authOperations';
+import { getTeammates } from 'redux/teammate/teammateOperations';
+import { getFeedbacks } from 'redux/feedback/feedbackOperations';
 //Components
 import Layout from '../Layout';
 import Loader from '../Loader';
@@ -16,19 +16,19 @@ import PublicRoute from 'router/PublicRoute';
 import PrivateRoute from 'router/PrivateRoute';
 
 const App = () => {
-	const { user } = useSelector(state => state.auth);
+	const { uid } = useSelector(state => state.auth);
 	const dispatch = useDispatch();
 
 	useEffect(() => {
-		dispatch(authOperations.getCurrentUser());
+		dispatch(getCurrentUser());
 	}, [dispatch]);
 
 	useEffect(() => {
-		if (user) {
-			dispatch(teammateOperations.getTeammates());
-			dispatch(feedbackOperations.getFeedbacks(user.uid));
+		if (uid) {
+			dispatch(getTeammates());
+			dispatch(getFeedbacks(uid));
 		}
-	}, [dispatch, user]);
+	}, [dispatch, uid]);
 
 	return (
 		<Router>

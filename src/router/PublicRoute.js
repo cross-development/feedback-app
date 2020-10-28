@@ -5,13 +5,13 @@ import { Route, Redirect } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
 const PublicRoute = ({ component: Component, ...routeProps }) => {
-	const { user } = useSelector(state => state.auth);
+	const { uid } = useSelector(state => state.auth);
 
 	return (
 		<Route
 			{...routeProps}
 			render={props =>
-				user && routeProps.restricted ? <Redirect to="/" /> : <Component {...props} />
+				uid && routeProps.restricted ? <Redirect to="/" /> : <Component {...props} />
 			}
 		/>
 	);

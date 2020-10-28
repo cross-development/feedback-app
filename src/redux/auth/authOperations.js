@@ -1,74 +1,97 @@
 //Database
 import firebase from 'firebase';
 //Redux
-import authActions from './authActions';
-import feedbackActions from 'redux/feedback/feedbackActions';
-import teammateActions from 'redux/teammate/teammateActions';
+import { authSlice } from './authReducers';
+import { feedbackSlice } from 'redux/feedback/feedbackReducers';
+import { teammateSlice } from 'redux/teammate/teammateReducers';
 
-const register = (name, email, password) => async dispatch => {
-	dispatch(authActions.registerRequest());
+const { updateProfile, setAuthLoading, setAuthError, authSignOut } = authSlice.actions;
+const { clearAllFeedbacks } = feedbackSlice.actions;
+const { clearAllTeammates } = teammateSlice.actions;
+
+export const register = (fullName, email, password) => async dispatch => {
+	dispatch(setAuthLoading(true));
 
 	try {
-		const { user: newUser } = await firebase.auth().createUserWithEmailAndPassword(email, password);
-		await newUser.updateProfile({ displayName: name });
+		await firebase.auth().createUserWithEmailAndPassword(email, password);
 
-		await firebase
-			.database()
-			.ref('users/' + newUser.uid)
-			.set({ name, uid: newUser.uid });
+		const user = await firebase.auth().currentUser;
+		await user.updateProfile({ displayName: fullName });
 
-		const user = newUser.toJSON();
+		const { uid, displayName, photoURL } = await firebase.auth().currentUser;
 
-		dispatch(authActions.registerSuccess(user));
+		dispatch(updateProfile({ uid, displayName, photoURL }));
+		dispatch(setAuthLoading(false));
 	} catch (error) {
-		dispatch(authActions.registerFailure(error));
+		dispatch(setAuthError(error));
+		dispatch(setAuthLoading(false));
 	}
 };
 
-const login = (email, password) => async dispatch => {
-	dispatch(authActions.loginRequest());
+export const login = (email, password) => async dispatch => {
+	dispatch(setAuthLoading(true));
 
 	try {
-		const { user: currentUser } = await firebase.auth().signInWithEmailAndPassword(email, password);
-		const user = currentUser.toJSON();
+		await firebase.auth().signInWithEmailAndPassword(email, password);
+		const { uid, displayName, photoURL } = await firebase.auth().currentUser;
 
-		dispatch(authActions.loginSuccess(user));
+		dispatch(updateProfile({ uid, displayName, photoURL }));
+		dispatch(setAuthLoading(false));
 	} catch (error) {
-		dispatch(authActions.loginFailure(error));
+		dispatch(setAuthError(error));
+		dispatch(setAuthLoading(false));
 	}
 };
 
-const logout = () => async dispatch => {
-	dispatch(authActions.logoutRequest());
+export const logout = () => async dispatch => {
+	dispatch(setAuthLoading(true));
 
 	try {
 		await firebase
 			.auth()
 			.signOut()
 			.then(() => {
-				dispatch(authActions.logoutSuccess());
-				dispatch(feedbackActions.clearFeedbacksSuccess());
-				dispatch(teammateActions.clearTeammatesSuccess());
+				dispatch(authSignOut());
+				dispatch(clearAllFeedbacks());
+				dispatch(clearAllTeammates());
 			});
+		dispatch(setAuthLoading(false));
 	} catch (error) {
-		dispatch(authActions.logoutFailure(error));
+		dispatch(setAuthError(error));
+		dispatch(setAuthLoading(false));
 	}
 };
 
-const getCurrentUser = () => dispatch => {
-	dispatch(authActions.getCurrentUserRequest());
+export const getCurrentUser = () => async dispatch => {
+	dispatch(setAuthLoading(true));
 
 	try {
-		firebase.auth().onAuthStateChanged(currentUser => {
-			if (!currentUser) return firebase.auth().signOut();
+		await firebase.auth().onAuthStateChanged(currentUser => {
+			if (currentUser) {
+				const { uid, displayName, photoURL } = currentUser;
 
-			const user = currentUser.toJSON();
-
-			dispatch(authActions.getCurrentUserSuccess(user));
+				dispatch(updateProfile({ uid, displayName, photoURL }));
+				dispatch(setAuthLoading(false));
+			}
 		});
 	} catch (error) {
-		dispatch(authActions.getCurrentUserFailure(error));
+		dispatch(setAuthError(error));
+		dispatch(setAuthLoading(false));
 	}
 };
 
-export default { register, login, logout, getCurrentUser };
+export const updateUserProfile = ({ fullName, photoURL: photo }) => async dispatch => {
+	dispatch(setAuthLoading(true));
+	try {
+		const user = await firebase.auth().currentUser;
+		await user.updateProfile({ displayName: fullName, photoURL: photo });
+
+		const { uid, displayName, photoURL } = await firebase.auth().currentUser;
+
+		dispatch(updateProfile({ uid, displayName, photoURL }));
+		dispatch(setAuthLoading(false));
+	} catch (error) {
+		dispatch(setAuthError(error));
+		dispatch(setAuthLoading(false));
+	}
+};

@@ -40,7 +40,9 @@ const Teammate = ({
 							placeholder="What is wrong"
 							value={resolutionState.wrong}
 							inputLength={resolutionState.wrong}
-							onChange={e => handleResolution({ ...resolutionState, wrong: e.target.value })}
+							onChange={({ target: { name, value } }) =>
+								handleResolution({ ...resolutionState, [name]: value })
+							}
 						/>
 					</StyledLabel>
 
@@ -53,7 +55,9 @@ const Teammate = ({
 							value={resolutionState.improve}
 							inputLength={resolutionState.improve}
 							placeholder="What could be improved"
-							onChange={e => handleResolution({ ...resolutionState, improve: e.target.value })}
+							onChange={({ target: { name, value } }) =>
+								handleResolution({ ...resolutionState, [name]: value })
+							}
 						/>
 					</StyledLabel>
 

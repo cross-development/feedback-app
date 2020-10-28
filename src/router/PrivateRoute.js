@@ -5,12 +5,12 @@ import { Route, Redirect } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
 const PrivateRoute = ({ component: Component, ...routeProps }) => {
-	const { user } = useSelector(state => state.auth);
+	const { uid } = useSelector(state => state.auth);
 
 	return (
 		<Route
 			{...routeProps}
-			render={props => (user ? <Component {...props} /> : <Redirect to="/" />)}
+			render={props => (uid ? <Component {...props} /> : <Redirect to="/" />)}
 		/>
 	);
 };

@@ -2,8 +2,8 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useHistory } from 'react-router-dom';
 //Redux
-import { feedbackOperations } from 'redux/feedback';
 import { useSelector, useDispatch } from 'react-redux';
+import { updateFeedback, addFeedback } from 'redux/feedback/feedbackOperations';
 //Components
 import Teammate from 'components/Teammate';
 
@@ -29,7 +29,7 @@ const TeammatePage = () => {
 
 	const dispatch = useDispatch();
 
-	const { user } = useSelector(state => state.auth);
+	const { uid } = useSelector(state => state.auth);
 	const { items: teammates } = useSelector(state => state.teammates);
 	const { items: feedbacks } = useSelector(state => state.feedbacks);
 
@@ -88,8 +88,8 @@ const TeammatePage = () => {
 		}
 
 		isUpdated
-			? dispatch(feedbackOperations.updateFeedback(user.uid, teammateFeedback))
-			: dispatch(feedbackOperations.addFeedback(user.uid, teammateFeedback));
+			? dispatch(updateFeedback(uid, teammateFeedback))
+			: dispatch(addFeedback(uid, teammateFeedback));
 
 		setResolution(resolutionState);
 		setRatings(ratingsState);

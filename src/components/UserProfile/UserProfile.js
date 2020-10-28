@@ -2,85 +2,95 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 //Styles
-import { StyledLabel, StyledAvatarIMG, StyledNameP, StyledPenBtn } from './UserProfile.styles';
+import { StyledPenBtn } from './UserProfile.styles';
+import { StyledLabel, StyledAvatarIMG, StyledNameP, StyledPenIcon } from './UserProfile.styles';
 import { StyledAvatarWrap, StyledRatingForm, StyledContainerDiv } from './UserProfile.styles';
 import { StyledInput, StyledTitleH2, StyledButton, StyledWrapperDiv } from './UserProfile.styles';
 
-const UserProfile = ({ user, onSubmit, profileState, handleChangeProfile }) => (
-	<StyledContainerDiv>
-		<StyledAvatarWrap>
-			<StyledAvatarIMG src={`${process.env.PUBLIC_URL}/avatars/user.png`} alt={user.displayName} />
+const UserProfile = ({ user, refs, onSubmit, profileState, onUpdateInfo, onChangeProfile }) => {
+	const userAvatar = user.photo || `${process.env.PUBLIC_URL}/avatars/unnamed.png`;
 
-			<StyledWrapperDiv>
-				<StyledNameP>{user.displayName}</StyledNameP>
-			</StyledWrapperDiv>
-		</StyledAvatarWrap>
+	return (
+		<StyledContainerDiv>
+			<StyledAvatarWrap>
+				<StyledAvatarIMG src={userAvatar} alt={user.displayName} />
 
-		<StyledRatingForm onSubmit={onSubmit}>
-			<StyledTitleH2>About Me</StyledTitleH2>
+				<StyledWrapperDiv>
+					<StyledNameP>{user.displayName}</StyledNameP>
+				</StyledWrapperDiv>
+			</StyledAvatarWrap>
 
-			<StyledWrapperDiv>
-				<StyledLabel>
-					Full Name
-					<StyledInput
-						required
-						type="text"
-						name="fullName"
-						autoComplete="off"
-						placeholder="Enter full name"
-						value={profileState.displayName || ''}
-						inputLength={profileState.displayName}
-						onChange={e =>
-							handleChangeProfile({ ...profileState, [e.target.name]: e.target.value })
-						}
-					/>
-					<StyledPenBtn />
-				</StyledLabel>
+			<StyledRatingForm onSubmit={onSubmit}>
+				<StyledTitleH2>About Me</StyledTitleH2>
 
-				<StyledLabel>
-					Phone number
-					<StyledInput
-						type="text"
-						name="phoneNumber"
-						autoComplete="off"
-						placeholder="Enter phone number"
-						value={profileState.phoneNumber || ''}
-						inputLength={profileState.phoneNumber}
-						onChange={e =>
-							handleChangeProfile({ ...profileState, [e.target.name]: e.target.value })
-						}
-					/>
-					<StyledPenBtn />
-				</StyledLabel>
+				<StyledWrapperDiv>
+					<StyledLabel>
+						Full Name
+						<StyledInput
+							required
+							disabled
+							type="text"
+							name="fullName"
+							autoComplete="off"
+							ref={refs.fullName}
+							placeholder="Enter full name"
+							value={profileState.fullName || ''}
+							inputLength={profileState.fullName}
+							onChange={({ target: { name, value } }) =>
+								onChangeProfile({ ...profileState, [name]: value })
+							}
+						/>
+						<StyledPenBtn id="fullName" onClick={onUpdateInfo}>
+							<StyledPenIcon />
+						</StyledPenBtn>
+					</StyledLabel>
 
-				<StyledLabel>
-					Profile photo
-					<StyledInput
-						type="text"
-						name="photoURL"
-						autoComplete="off"
-						placeholder="Enter photo URL"
-						value={profileState.photoURL || ''}
-						inputLength={profileState.photoURL}
-						onChange={e =>
-							handleChangeProfile({ ...profileState, [e.target.name]: e.target.value })
-						}
-					/>
-					<StyledPenBtn />
-				</StyledLabel>
+					<StyledLabel>
+						Profile photo
+						<StyledInput
+							disabled
+							type="text"
+							name="photoURL"
+							autoComplete="off"
+							ref={refs.photoURL}
+							placeholder="Enter photo URL"
+							value={profileState.photoURL || ''}
+							inputLength={profileState.photoURL}
+							onChange={({ target: { name, value } }) =>
+								onChangeProfile({ ...profileState, [name]: value })
+							}
+						/>
+						<StyledPenBtn id="photoURL" onClick={onUpdateInfo}>
+							<StyledPenIcon />
+						</StyledPenBtn>
+					</StyledLabel>
 
-				<StyledButton type="submit">Update</StyledButton>
-			</StyledWrapperDiv>
-		</StyledRatingForm>
-	</StyledContainerDiv>
-);
+					<StyledButton type="submit">Update</StyledButton>
+				</StyledWrapperDiv>
+			</StyledRatingForm>
+		</StyledContainerDiv>
+	);
+};
 
 UserProfile.propTypes = {
-	user: PropTypes.objectOf(PropTypes.any),
+	user: PropTypes.shape({
+		displayName: PropTypes.string,
+		photoURL: PropTypes.string,
+	}).isRequired,
+	refs: PropTypes.objectOf(PropTypes.any).isRequired,
+	onSubmit: PropTypes.func.isRequired,
+	onUpdateInfo: PropTypes.func.isRequired,
+	onChangeProfile: PropTypes.func.isRequired,
+	profileState: PropTypes.exact({
+		photoURL: PropTypes.string,
+		fullName: PropTypes.string,
+	}).isRequired,
 };
 
 UserProfile.defaultProps = {
-	user: null,
+	uid: null,
+	displayName: '',
+	photoURL: null,
 };
 
 export default UserProfile;

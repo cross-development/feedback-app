@@ -1,23 +1,26 @@
 //Database
 import firebase from 'firebase';
 //Redux
-import teammateActions from './teammateActions';
+import { teammateSlice } from './teammateReducers';
 
-const addTeammate = credentials => dispatch => {
-	dispatch(teammateActions.onAddTeammateRequest());
+const { getAllTeammates, setTeammatesLoading, setTeammatesError } = teammateSlice.actions;
+
+export const addTeammate = credentials => dispatch => {
+	dispatch(setTeammatesLoading(true));
 
 	try {
 		const userCollection = firebase.database().ref('teammates');
 		userCollection.push(credentials);
 
-		dispatch(teammateActions.onAddTeammateSuccess());
+		dispatch(setTeammatesLoading(false));
 	} catch (error) {
-		dispatch(teammateActions.onAddTeammateFailure(error));
+		dispatch(setTeammatesError(error));
+		dispatch(setTeammatesLoading(false));
 	}
 };
 
-const getTeammates = () => dispatch => {
-	dispatch(teammateActions.getTeammatesRequest());
+export const getTeammates = () => dispatch => {
+	dispatch(setTeammatesLoading(true));
 
 	try {
 		const teammates = firebase.database().ref('teammates');
@@ -28,14 +31,11 @@ const getTeammates = () => dispatch => {
 				return acc;
 			}, []);
 
-			dispatch(teammateActions.getTeammatesSuccess(teammatesData));
+			dispatch(getAllTeammates(teammatesData));
+			dispatch(setTeammatesLoading(false));
 		});
 	} catch (error) {
-		dispatch(teammateActions.getTeammatesFailure(error));
+		dispatch(setTeammatesError(error));
+		dispatch(setTeammatesLoading(false));
 	}
-};
-
-export default {
-	addTeammate,
-	getTeammates,
 };

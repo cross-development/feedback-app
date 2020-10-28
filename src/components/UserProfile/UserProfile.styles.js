@@ -45,6 +45,10 @@ export const StyledInput = styled.input`
 	width: 100%;
 	outline: 0;
 
+	&:disabled {
+		background-color: #fafafa;
+	}
+
 	&::placeholder {
 		font: inherit;
 		color: #616161;
@@ -129,15 +133,24 @@ export const StyledAvatarIMG = styled.img`
 	height: 100px;
 	display: block;
 	margin-right: 1rem;
+	border-radius: 50px;
 `;
 
-export const StyledPenBtn = styled(FaPen)`
+export const StyledPenBtn = styled.button`
 	position: absolute;
 	bottom: 6px;
 	right: 0;
+	cursor: pointer;
+	border: none;
+	background-color: transparent;
+	outline: none;
+`;
+
+export const StyledPenIcon = styled(FaPen)`
 	color: #9e9e9e;
 	transition: color 250ms linear;
-	cursor: pointer;
+	display: block;
+	font-size: 18px;
 
 	&:hover {
 		color: #424242;

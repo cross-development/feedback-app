@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 //Components
 import Login from 'components/Login';
 //Redux
-import { authOperations } from 'redux/auth';
+import { login } from 'redux/auth/authOperations';
 import { useSelector, useDispatch } from 'react-redux';
 
 const LoginPage = () => {
@@ -19,7 +19,7 @@ const LoginPage = () => {
 	const handleSubmit = e => {
 		e.preventDefault();
 
-		dispatch(authOperations.login(email, password));
+		dispatch(login(email, password));
 
 		setPassword('');
 		setEmail('');

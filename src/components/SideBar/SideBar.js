@@ -15,7 +15,7 @@ import { StyledAside } from './SideBar.styles';
 const SideBar = () => {
 	const [filter, setFilter] = useState('');
 
-	const { user, loading: userLoading } = useSelector(state => state.auth);
+	const { uid, displayName, photoURL, loading: userLoading } = useSelector(state => state.auth);
 	const { loading: teammatesLoading } = useSelector(state => state.teammates);
 	const { loading: feedbacksLoading } = useSelector(state => state.feedbacks);
 
@@ -27,9 +27,9 @@ const SideBar = () => {
 		<StyledAside>
 			<Logo />
 
-			{user ? (
+			{uid ? (
 				<>
-					<UserMenu uid={user.uid} name={user.displayName} avatar={user.photoURL} />
+					<UserMenu uid={uid} name={displayName} avatar={photoURL} />
 
 					<TeamFilter
 						value={filter}
@@ -44,7 +44,7 @@ const SideBar = () => {
 					)}
 				</>
 			) : (
-				user || (userLoading && <AuthMenu />)
+				(uid && userLoading) || <AuthMenu />
 			)}
 		</StyledAside>
 	);

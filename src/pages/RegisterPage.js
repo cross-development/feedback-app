@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 //Components
 import Register from 'components/Register';
 //Redux
-import { authOperations } from 'redux/auth';
+import { register } from 'redux/auth/authOperations';
 import { useDispatch, useSelector } from 'react-redux';
 
 const RegisterPage = () => {
@@ -21,7 +21,7 @@ const RegisterPage = () => {
 	const handleSubmit = e => {
 		e.preventDefault();
 
-		dispatch(authOperations.register(fullName, email, password));
+		dispatch(register(fullName, email, password));
 
 		setFullName('');
 		setPassword('');

@@ -1,37 +1,52 @@
 //Core
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
+import { useHistory } from 'react-router-dom';
 //Components
 import UserProfile from 'components/UserProfile';
 //Redux
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { updateUserProfile } from 'redux/auth/authOperations';
 
 const UserPage = () => {
-	const { user } = useSelector(state => state.auth);
+	const { photoURL: photo, displayName } = useSelector(state => state.auth);
+	const dispatch = useDispatch();
 
-	const clearInput = '';
+	const history = useHistory();
+
+	const fullName = useRef(null);
+	const photoURL = useRef(null);
+	const refs = { fullName, photoURL };
 
 	const userProfile = {
-		photoURL: user.photoURL,
-		phoneNumber: user.phoneNumber,
-		displayName: user.displayName,
+		photoURL: photo,
+		fullName: displayName,
 	};
 
 	const [profileState, setProfileState] = useState(userProfile);
 
-	const handleChangeProfile = value => setProfileState(value);
+	const handleUpdateInfo = e => {
+		e.preventDefault();
+
+		const textInput = refs[e.currentTarget.id].current;
+		textInput.disabled = false;
+		textInput.focus();
+	};
 
 	const handleSubmit = e => {
 		e.preventDefault();
 
-		console.log(profileState);
+		dispatch(updateUserProfile({ ...profileState }));
+		history.replace('/');
 	};
 
 	return (
 		<UserProfile
-			user={user}
+			refs={refs}
 			onSubmit={handleSubmit}
 			profileState={profileState}
-			handleChangeProfile={handleChangeProfile}
+			user={{ photo, displayName }}
+			onUpdateInfo={handleUpdateInfo}
+			onChangeProfile={setProfileState}
 		/>
 	);
 };

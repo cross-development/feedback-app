@@ -8,13 +8,13 @@ import Loader from 'components/Loader';
 import { useSelector } from 'react-redux';
 
 const HomePage = () => {
-	const { user, loading } = useSelector(state => state.auth);
+	const { uid, loading: userLoading } = useSelector(state => state.auth);
 
 	return (
 		<>
-			{user && <Main />}
+			{uid && <Main />}
 
-			{!user || loading ? <Home /> : <Loader onLoad={loading} />}
+			{!uid || userLoading ? <Home /> : <Loader onLoad={userLoading} />}
 		</>
 	);
 };

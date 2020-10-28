@@ -1,16 +1,18 @@
 //Core
-import { configureStore } from '@reduxjs/toolkit';
+import { configureStore, combineReducers } from '@reduxjs/toolkit';
 //Redux
-import { authReducers } from 'redux/auth';
-import { feedbackReducers } from 'redux/feedback';
-import { teammateReducers } from 'redux/teammate';
+import { authSlice } from './auth/authReducers';
+import { feedbackSlice } from './feedback/feedbackReducers';
+import { teammateSlice } from './teammate/teammateReducers';
+
+const rootReducer = combineReducers({
+	[authSlice.name]: authSlice.reducer,
+	[feedbackSlice.name]: feedbackSlice.reducer,
+	[teammateSlice.name]: teammateSlice.reducer,
+});
 
 const store = configureStore({
-	reducer: {
-		auth: authReducers,
-		feedbacks: feedbackReducers,
-		teammates: teammateReducers,
-	},
+	reducer: rootReducer,
 });
 
 export default store;

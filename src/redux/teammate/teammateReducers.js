@@ -1,29 +1,33 @@
 //Core
-import { combineReducers } from 'redux';
-import { createReducer } from '@reduxjs/toolkit';
-//Redux
-import teammateActions from './teammateActions';
+import { createSlice } from '@reduxjs/toolkit';
 
-//Teammates reducer
-const items = createReducer([], {
-	[teammateActions.getTeammatesSuccess]: (state, { payload }) => payload,
-	[teammateActions.clearTeammatesSuccess]: () => [],
-});
+const state = {
+	items: [],
+	error: null,
+	loading: false,
+};
 
-//Loading reducer
-const loading = createReducer(false, {
-	[teammateActions.getTeammatesRequest]: () => true,
-	[teammateActions.getTeammatesSuccess]: () => false,
-	[teammateActions.getTeammatesFailure]: () => false,
-});
+export const teammateSlice = createSlice({
+	name: 'teammates',
 
-//Error reducer
-const error = createReducer(null, {
-	[teammateActions.getTeammatesFailure]: (state, { payload }) => payload,
-});
+	initialState: state,
 
-export default combineReducers({
-	items,
-	loading,
-	error,
+	reducers: {
+		getAllTeammates: (state, { payload }) => ({
+			...state,
+			items: [...payload],
+		}),
+
+		setTeammatesLoading: (state, { payload }) => ({
+			...state,
+			loading: payload,
+		}),
+
+		setTeammatesError: (state, { payload }) => ({
+			...state,
+			error: payload,
+		}),
+
+		clearAllTeammates: () => state,
+	},
 });

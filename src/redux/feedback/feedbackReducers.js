@@ -1,39 +1,33 @@
 //Core
-import { combineReducers } from 'redux';
-import { createReducer } from '@reduxjs/toolkit';
-//Redux
-import feedbackActions from './feedbackActions';
+import { createSlice } from '@reduxjs/toolkit';
 
-//Feedback reducer
-const items = createReducer([], {
-	[feedbackActions.getFeedbackSuccess]: (state, { payload }) => payload,
-	[feedbackActions.clearFeedbacksSuccess]: () => [],
-});
+const state = {
+	items: [],
+	error: null,
+	loading: false,
+};
 
-//Loading reducer
-const loading = createReducer(false, {
-	[feedbackActions.addFeedbackRequest]: () => true,
-	[feedbackActions.addFeedbackSuccess]: () => false,
-	[feedbackActions.addFeedbackFailure]: () => false,
+export const feedbackSlice = createSlice({
+	name: 'feedbacks',
 
-	[feedbackActions.updateFeedbackRequest]: () => true,
-	[feedbackActions.updateFeedbackSuccess]: () => false,
-	[feedbackActions.updateFeedbackFailure]: () => false,
+	initialState: state,
 
-	[feedbackActions.getFeedbackRequest]: () => true,
-	[feedbackActions.getFeedbackSuccess]: () => false,
-	[feedbackActions.getFeedbackFailure]: () => false,
-});
+	reducers: {
+		getAllFeedbacks: (state, { payload }) => ({
+			...state,
+			items: [...payload],
+		}),
 
-//Error reducer
-const error = createReducer(null, {
-	[feedbackActions.addFeedbackFailure]: (state, { payload }) => payload,
-	[feedbackActions.updateFeedbackFailure]: (state, { payload }) => payload,
-	[feedbackActions.getFeedbackFailure]: (state, { payload }) => payload,
-});
+		setFeedbacksLoading: (state, { payload }) => ({
+			...state,
+			loading: payload,
+		}),
 
-export default combineReducers({
-	items,
-	loading,
-	error,
+		setFeedbacksError: (state, { payload }) => ({
+			...state,
+			error: payload,
+		}),
+
+		clearAllFeedbacks: () => state,
+	},
 });
