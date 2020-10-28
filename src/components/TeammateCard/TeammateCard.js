@@ -2,7 +2,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 //Styles
-// import { StyledRatingStar } from './TeammateCard.styles';
 import { StyledNameP, StyledAvatarIMG, StyledWrapperDiv, StyledEsc } from './TeammateCard.styles';
 import { StyledAvatarWrap, StyledOccupationP, StyledContainerDiv } from './TeammateCard.styles';
 
@@ -19,14 +18,6 @@ const TeammateCard = ({ teammate }) => {
 					<StyledOccupationP>{tmOccupation}</StyledOccupationP>
 				</StyledWrapperDiv>
 			</StyledAvatarWrap>
-
-			{/* <StyledWrapperDiv>
-				<p>Average score</p>
-				<div>
-					<span>4.2</span>
-					<StyledRatingStar name="score" value={4} readOnly />
-				</div>
-			</StyledWrapperDiv> */}
 
 			<StyledWrapperDiv>
 				<StyledEsc to="/">

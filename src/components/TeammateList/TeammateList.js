@@ -14,8 +14,6 @@ const TeammateList = ({ filter }) => {
 	const getVisibleTeammates = teammates =>
 		teammates.filter(({ tmName }) => tmName.toLowerCase().includes(filter.toLowerCase()));
 
-	const visibleTeammates = getVisibleTeammates(teammates);
-
 	const getTeammatesWithFeedbackStatus = (visibleTeammates, feedbacks) => {
 		if (feedbacks.length < 1) return visibleTeammates;
 
@@ -27,6 +25,7 @@ const TeammateList = ({ filter }) => {
 		return newArray;
 	};
 
+	const visibleTeammates = getVisibleTeammates(teammates);
 	const teammatesWithFbStatus = getTeammatesWithFeedbackStatus(visibleTeammates, feedbacks);
 
 	return (

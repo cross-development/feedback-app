@@ -5,8 +5,8 @@ import PropTypes from 'prop-types';
 import RatingList from '../RatingList';
 import TeammateCard from '../TeammateCard';
 //Styles
-import { StyledRatingForm, StyledTitleH2, StyledButton, StyledWrapperDiv } from './Teammate.styles';
 import { StyledLabel, StyledInput, StyledContainerDiv, StyledSubtitleH3 } from './Teammate.styles';
+import { StyledRatingForm, StyledTitleH2, StyledButton, StyledWrapperDiv } from './Teammate.styles';
 
 const Teammate = ({
 	teammate,

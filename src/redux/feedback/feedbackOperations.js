@@ -1,5 +1,4 @@
 //Database
-import { current } from '@reduxjs/toolkit';
 import firebase from 'firebase';
 //Redux
 import feedbackActions from './feedbackActions';

@@ -29,7 +29,7 @@ const SideBar = () => {
 
 			{user ? (
 				<>
-					<UserMenu uid={user.uid} name={user.displayName} />
+					<UserMenu uid={user.uid} name={user.displayName} avatar={user.photoURL} />
 
 					<TeamFilter
 						value={filter}

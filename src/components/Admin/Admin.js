@@ -1,19 +1,18 @@
 //Core
 import React, { useState } from 'react';
-import PropTypes from 'prop-types';
 //Redux
 import { useDispatch } from 'react-redux';
 import { teammateOperations } from 'redux/teammate';
 //Styles
 import { StylesForm, StyledLabel, StyledInput, StyledButton } from './Admin.styles';
 
-const Admin = () => {
-	const initialState = {
-		tmName: '',
-		tmAvatar: '',
-		tmOccupation: '',
-	};
+const initialState = {
+	tmName: '',
+	tmAvatar: '',
+	tmOccupation: '',
+};
 
+const Admin = () => {
 	const [state, setState] = useState(initialState);
 
 	const dispatch = useDispatch();

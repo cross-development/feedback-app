@@ -1,35 +1,37 @@
 //Core
 import React, { useState, useEffect } from 'react';
-import PropTypes from 'prop-types';
 import { useParams, useHistory } from 'react-router-dom';
 //Redux
-import { connect } from 'react-redux';
-import { authSelectors } from 'redux/auth';
-import { feedbackSelectors } from 'redux/feedback';
-import { teammateSelectors } from 'redux/teammate';
 import { feedbackOperations } from 'redux/feedback';
+import { useSelector, useDispatch } from 'react-redux';
 //Components
 import Teammate from 'components/Teammate';
 
-const TeammatePage = ({ existUser, teammates, feedbacks, onAddFeedback, onUpdateFeedback }) => {
-	const { teammateId } = useParams();
+const ratingsState = {
+	leadershipSkills: 0,
+	englishKnowledge: 0,
+	communicateSkills: 0,
+	problemSolving: 0,
+	programmingSkills: 0,
+	abilityLearning: 0,
+	workflowBehavior: 0,
+	senseOfHumor: 0,
+};
+
+const resolutionState = {
+	improve: '',
+	wrong: '',
+};
+
+const TeammatePage = () => {
 	const history = useHistory();
+	const { teammateId } = useParams();
 
-	const ratingsState = {
-		leadershipSkills: 0,
-		englishKnowledge: 0,
-		communicateSkills: 0,
-		problemSolving: 0,
-		programmingSkills: 0,
-		abilityLearning: 0,
-		workflowBehavior: 0,
-		senseOfHumor: 0,
-	};
+	const dispatch = useDispatch();
 
-	const resolutionState = {
-		improve: '',
-		wrong: '',
-	};
+	const { user } = useSelector(state => state.auth);
+	const { items: teammates } = useSelector(state => state.teammates);
+	const { items: feedbacks } = useSelector(state => state.feedbacks);
 
 	const [resolution, setResolution] = useState(resolutionState);
 	const [ratings, setRatings] = useState(ratingsState);
@@ -62,7 +64,7 @@ const TeammatePage = ({ existUser, teammates, feedbacks, onAddFeedback, onUpdate
 		setFeedback({ ratings, resolution });
 		setIsReviewed(true);
 		setIsUpdated(false);
-	}, [feedbacks, ratingsState, resolutionState, teammateId]);
+	}, [feedbacks, teammateId]);
 
 	const handleChangeRatings = value => setRatings(value);
 	const handleChangeResolution = value => setResolution(value);
@@ -86,8 +88,8 @@ const TeammatePage = ({ existUser, teammates, feedbacks, onAddFeedback, onUpdate
 		}
 
 		isUpdated
-			? onUpdateFeedback(existUser.uid, teammateFeedback)
-			: onAddFeedback(existUser.uid, teammateFeedback);
+			? dispatch(feedbackOperations.updateFeedback(user.uid, teammateFeedback))
+			: dispatch(feedbackOperations.addFeedback(user.uid, teammateFeedback));
 
 		setResolution(resolutionState);
 		setRatings(ratingsState);
@@ -115,60 +117,4 @@ const TeammatePage = ({ existUser, teammates, feedbacks, onAddFeedback, onUpdate
 	);
 };
 
-TeammatePage.propTypes = {
-	teammates: PropTypes.arrayOf(
-		PropTypes.shape({
-			tmId: PropTypes.string.isRequired,
-			tmName: PropTypes.string.isRequired,
-			tmAvatar: PropTypes.string.isRequired,
-			tmOccupation: PropTypes.string.isRequired,
-		}).isRequired,
-	).isRequired,
-
-	existUser: PropTypes.objectOf(PropTypes.any),
-
-	onAddFeedback: PropTypes.func.isRequired,
-
-	feedbacks: PropTypes.arrayOf(
-		PropTypes.shape({
-			fbId: PropTypes.string.isRequired,
-			ratings: PropTypes.shape({
-				leadershipSkills: PropTypes.number.isRequired,
-				englishKnowledge: PropTypes.number.isRequired,
-				communicateSkills: PropTypes.number.isRequired,
-				problemSolving: PropTypes.number.isRequired,
-				programmingSkills: PropTypes.number.isRequired,
-				abilityLearning: PropTypes.number.isRequired,
-				workflowBehavior: PropTypes.number.isRequired,
-				senseOfHumor: PropTypes.number.isRequired,
-			}).isRequired,
-			resolution: PropTypes.exact({
-				improve: PropTypes.string.isRequired,
-				wrong: PropTypes.string.isRequired,
-			}).isRequired,
-			teammates: PropTypes.exact({
-				tmId: PropTypes.string.isRequired,
-				tmName: PropTypes.string.isRequired,
-				tmAvatar: PropTypes.string.isRequired,
-				tmOccupation: PropTypes.string.isRequired,
-			}),
-		}).isRequired,
-	).isRequired,
-};
-
-TeammatePage.defaultProps = {
-	existUser: null,
-};
-
-const mapStateToProps = state => ({
-	existUser: authSelectors.existUser(state),
-	teammates: teammateSelectors.getTeammates(state),
-	feedbacks: feedbackSelectors.getFeedbacks(state),
-});
-
-const mapDispatchToProps = {
-	onAddFeedback: feedbackOperations.addFeedback,
-	onUpdateFeedback: feedbackOperations.updateFeedback,
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(TeammatePage);
+export default TeammatePage;

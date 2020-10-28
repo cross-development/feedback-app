@@ -10,12 +10,14 @@ import { StyledNameLink, StyledNameWrapDiv, StyledLogoutLink } from './UserMenu.
 import { StyledUserWrapDiv, StyledAvatarWrapDiv, StyledAvatarIMG } from './UserMenu.styles';
 
 const UserMenu = ({ uid, avatar, name }) => {
+	const userAvatar = avatar || `${process.env.PUBLIC_URL}/avatars/unnamed.png`;
+
 	const dispatch = useDispatch();
 
 	return (
 		<StyledUserWrapDiv>
 			<StyledAvatarWrapDiv>
-				<StyledAvatarIMG src={avatar} alt={name} />
+				<StyledAvatarIMG src={userAvatar} alt={name} />
 			</StyledAvatarWrapDiv>
 
 			<StyledNameWrapDiv>
@@ -30,13 +32,13 @@ const UserMenu = ({ uid, avatar, name }) => {
 };
 
 UserMenu.propTypes = {
-	name: PropTypes.string,
 	avatar: PropTypes.string,
+	uid: PropTypes.string.isRequired,
+	name: PropTypes.string.isRequired,
 };
 
 UserMenu.defaultProps = {
-	name: '',
-	avatar: `${process.env.PUBLIC_URL}/avatars/unnamed.png`,
+	avatar: null,
 };
 
 export default UserMenu;
