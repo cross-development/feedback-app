@@ -2,6 +2,7 @@
 import React, { useState } from 'react';
 //Components
 import Register from 'components/Register';
+import Notification from 'components/Notification';
 //Redux
 import { register } from 'redux/auth/authOperations';
 import { useDispatch, useSelector } from 'react-redux';
@@ -29,7 +30,7 @@ const RegisterPage = () => {
 	};
 
 	return (
-		<div>
+		<>
 			<Register
 				email={email}
 				fullName={fullName}
@@ -39,7 +40,9 @@ const RegisterPage = () => {
 				onChangeEmail={handleChangeEmail}
 				onChangePassword={handleChangePassword}
 			/>
-		</div>
+
+			{error && <Notification message={error.message} />}
+		</>
 	);
 };
 

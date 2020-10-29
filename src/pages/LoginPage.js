@@ -2,6 +2,7 @@
 import React, { useState } from 'react';
 //Components
 import Login from 'components/Login';
+import Notification from 'components/Notification';
 //Redux
 import { login } from 'redux/auth/authOperations';
 import { useSelector, useDispatch } from 'react-redux';
@@ -26,7 +27,7 @@ const LoginPage = () => {
 	};
 
 	return (
-		<div>
+		<>
 			<Login
 				email={email}
 				password={password}
@@ -34,7 +35,9 @@ const LoginPage = () => {
 				onChangeEmail={handleChangeEmail}
 				onChangePassword={handleChangePassword}
 			/>
-		</div>
+
+			{error && <Notification message={error.message} />}
+		</>
 	);
 };
 

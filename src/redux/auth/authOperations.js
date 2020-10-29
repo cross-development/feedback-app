@@ -102,3 +102,5 @@ export const updateUserProfile = ({ fullName, photoURL: photo }) => async dispat
 		dispatch(setAuthLoading(false));
 	}
 };
+
+export const unsetErrorMessage = () => dispatch => dispatch(setAuthError(null));

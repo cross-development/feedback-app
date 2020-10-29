@@ -10,7 +10,7 @@ export const StylesForm = styled.form`
 	display: flex;
 	flex-direction: column;
 	justify-content: flex-start;
-	margin: 3rem auto;
+	margin: 6rem auto 3rem;
 	padding: 20px 14px;
 	width: 420px;
 	border: none;
