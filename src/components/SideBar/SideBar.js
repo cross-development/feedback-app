@@ -2,7 +2,6 @@
 import React, { useState } from 'react';
 //Components
 import Logo from '../Logo';
-import Loader from '../Loader';
 import AuthMenu from '../AuthMenu';
 import UserMenu from '../UserMenu';
 import TeamFilter from '../TeamFilter';
@@ -27,21 +26,20 @@ const SideBar = () => {
 		<StyledAside>
 			<Logo />
 
-			{uid
-				? !teammatesLoading &&
-				  !feedbacksLoading && (
-						<>
-							{displayName && <UserMenu uid={uid} name={displayName} avatar={photoURL} />}
+			{uid && !teammatesLoading && !feedbacksLoading && (
+				<>
+					{displayName && <UserMenu uid={uid} name={displayName} avatar={photoURL} />}
 
-							<TeamFilter
-								value={filter}
-								onClearFilter={handleClearFilter}
-								onChangeFilter={handleChangeFilter}
-							/>
-							<TeammateList filter={filter} />
-						</>
-				  )
-				: (uid && userLoading) || <AuthMenu />}
+					<TeamFilter
+						value={filter}
+						onClearFilter={handleClearFilter}
+						onChangeFilter={handleChangeFilter}
+					/>
+					<TeammateList filter={filter} />
+				</>
+			)}
+
+			{!uid && userLoading ? <AuthMenu /> : null}
 		</StyledAside>
 	);
 };
